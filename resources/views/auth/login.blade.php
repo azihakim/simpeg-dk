@@ -62,6 +62,9 @@
 							<button type="submit" class="btn btn-primary btn-block"><strong>Login</strong></button>
 						</div>
 					</div>
+					<p class="mt-1">
+						<a href="forgot-password.html">Klik untuk kirim lamaran</a>
+					</p>
 				</form>
 			</div>
 		</div>

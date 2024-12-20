@@ -128,6 +128,14 @@
 										</p>
 									</a>
 								</li>
+								<li class="nav-item">
+									<a href="{{ route('location.index') }}" class="nav-link @yield('activeNavbar')">
+										<i class="nav-icon fas fa-building"></i>
+										<p>
+											Lokasi
+										</p>
+									</a>
+								</li>
 							</ul>
 						</li>
 
@@ -178,19 +186,6 @@
 		</footer>
 
 
-	</div>
-
-	<div class="form-group">
-		<label>Jabatan</label>
-		<select class="form-control select2">
-			<option selected="selected">Alabama</option>
-			<option>Alaska</option>
-			<option>California</option>
-			<option>Delaware</option>
-			<option>Tennessee</option>
-			<option>Texas</option>
-			<option>Washington</option>
-		</select>
 	</div>
 
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

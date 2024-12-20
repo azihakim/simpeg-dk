@@ -3,6 +3,7 @@
 use App\Http\Controllers\AbsensiController;
 use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\KaryawanController;
+use App\Http\Controllers\LatlongController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -32,12 +33,14 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [AbsensiController::class, 'index'])->name('absensi.index');
     });
 
-    Route::get('/office-location', function () {
-        return response()->json([
-            'latitude' => -3.002354,
-            'longitude' => 104.725533,
-        ]);
-    })->name('office-location');
+    // Route::get('/office-location', function () {
+    //     return response()->json([
+    //         'latitude' => -2.9095937,
+    //         'longitude' => 104.6833956,
+    //     ]);
+    // })->name('office-location');
+    Route::get('/office-location', [LatlongController::class, 'getLokasi'])->name('office-location');
+    Route::resource('location', LatlongController::class);
 
     Route::resource('jabatan', JabatanController::class);
     Route::resource('karyawan', KaryawanController::class);

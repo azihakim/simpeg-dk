@@ -173,6 +173,9 @@
 			takePhoto.style.display = 'none';
 			startCamera.style.display = 'block';
 
+			console.log('office longlat: ', officeLatitude, officeLongitude);
+
+
 			// Ambil lokasi pengguna
 			if (navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(position => {
@@ -194,7 +197,7 @@
 						officeLongitude);
 
 					// Cek apakah jarak lebih kecil dari 50 meter
-					if (distance <= 10000) {
+					if (distance <= 1000000) {
 						// Tampilkan peta
 						modalDialog.classList.remove('modal-sm');
 						modalDialog.classList.add('modal-xl');
