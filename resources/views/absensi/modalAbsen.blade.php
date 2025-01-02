@@ -173,9 +173,6 @@
 			takePhoto.style.display = 'none';
 			startCamera.style.display = 'block';
 
-			console.log('office longlat: ', officeLatitude, officeLongitude);
-
-
 			// Ambil lokasi pengguna
 			if (navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(position => {
