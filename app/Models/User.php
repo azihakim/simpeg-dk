@@ -9,8 +9,19 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
+    public function absensi()
+    {
+        return $this->hasMany(Absensi::class, 'id_karyawan', 'id');
+    }
+    public function divisi()
+    {
+        return $this->belongsTo(Jabatan::class, 'divisi_id', 'id');
+    }
+    public function punishments()
+    {
+        return $this->hasMany(RewardPunishment::class, 'id_karyawan');
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -18,14 +29,20 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'username',
-        'role',
+        'name',
+        'email',
         'password',
         'nama',
-        'jabatan_id',
-        'alamat',
-        'no_telp',
+        'jabatan',
+        'status',
+        'status_kerja',
         'nik',
+        'umur',
+        'telepon',
+        'alamat',
+        'username',
+        'password',
+        'divisi',
     ];
 
     /**
@@ -39,20 +56,11 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * The attributes that should be cast.
      *
-     * @return array<string, string>
+     * @var array<string, string>
      */
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
-    }
-
-    function jabatan()
-    {
-        return $this->belongsTo(Jabatan::class);
-    }
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
 }

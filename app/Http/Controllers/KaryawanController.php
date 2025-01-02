@@ -13,7 +13,7 @@ class KaryawanController extends Controller
      */
     public function index()
     {
-        $karyawan = User::where('role', 'Karyawan')->get();
+        $karyawan = User::where('jabatan', 'Karyawan')->get();
         return view('karyawan.index', compact('karyawan'));
     }
 
@@ -29,12 +29,12 @@ class KaryawanController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, User $user)
+    public function store(Request $request)
     {
         try {
             $request->validate([
                 'nama' => 'required',
-                'jabatan_id' => 'required',
+                'divisi_id' => 'required',
                 'alamat' => 'required',
                 'no_telp' => 'required',
                 'nik' => 'required',
@@ -42,7 +42,9 @@ class KaryawanController extends Controller
                 'password' => 'nullable',
             ]);
 
-            User::create($request->all());
+            $user = new User($request->all());
+            $user->jabatan = 'Karyawan';
+            $user->save();
 
             return redirect()->route('karyawan.index')
                 ->with('success', 'Karyawan created successfully');

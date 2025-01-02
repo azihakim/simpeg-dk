@@ -15,7 +15,7 @@
 	<link rel="stylesheet" href="{{ asset('vendors/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('vendors/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
 	<!-- Theme style -->
-	{{-- <link rel="stylesheet" href="{{ asset('vendors/dist/css/adminlte.min.css') }}"> --}}
+	<link rel="stylesheet" href="{{ asset('vendors/dist/css/adminlte.min.css') }}">
 	<!-- Select2 -->
 	<link rel="stylesheet" href="{{ asset('vendors/plugins/select2/css/select2.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('vendors/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
@@ -26,7 +26,8 @@
 	<!-- Bootstrap Color Picker -->
 	<link rel="stylesheet" href="{{ asset('vendors/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css') }}">
 	<!-- Tempusdominus Bootstrap 4 -->
-	<link rel="stylesheet" href="{{ asset('vendors/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
+	<link rel="stylesheet"
+		href="{{ asset('vendors/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
 	<!-- Bootstrap4 Duallistbox -->
 	<link rel="stylesheet" href="{{ asset('vendors/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css') }}">
 	<!-- BS Stepper -->
@@ -120,7 +121,7 @@
 									</a>
 								</li>
 								<li class="nav-item">
-									<a href="{{ route('absensi.index') }}" class="nav-link @yield('activeNavbar')">
+									<a href="{{ route('absensi.index') }}" class="nav-link @yield('act-absensi')">
 										<i class="nav-icon fas fa-calendar"></i>
 										<p>
 											Absensi
@@ -128,10 +129,26 @@
 									</a>
 								</li>
 								<li class="nav-item">
-									<a href="{{ route('location.index') }}" class="nav-link @yield('activeNavbar')">
+									<a href="{{ route('location.index') }}" class="nav-link @yield('act-lokasi')">
 										<i class="nav-icon fas fa-building"></i>
 										<p>
 											Lokasi
+										</p>
+									</a>
+								</li>
+								<li class="nav-item">
+									<a href="{{ route('cutiizin.index') }}" class="nav-link @yield('act-cutiizin')">
+										<i class="nav-icon fas fa-calendar-times"></i>
+										<p>
+											Cuti/Izin
+										</p>
+									</a>
+								</li>
+								<li class="nav-item">
+									<a href="{{ route('promosidemosi.index') }}" class="nav-link @yield('act-promosidemosi')">
+										<i class="nav-icon fas fa-bullhorn"></i>
+										<p>
+											Promosi/Demosi
 										</p>
 									</a>
 								</li>

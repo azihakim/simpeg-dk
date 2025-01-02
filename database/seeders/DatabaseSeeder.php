@@ -17,10 +17,16 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         User::create([
-            'username' => 'admin',
+            'nama' => 'Super Admin',
+            'jabatan' => 'Super Admin',
+            'status' => '',
+            'status_kerja' => '',
+            'nik' => '',
+            'umur' => '20',
+            'telepon' => '0812343710',
+            'alamat' => 'Jl. Sukamaju',
+            'username' => 'sa',
             'password' => bcrypt('123'),
-            'nama' => 'Admin',
-            'role' => 'Admin',
         ]);
 
         $jabatan = [

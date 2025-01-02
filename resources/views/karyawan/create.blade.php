@@ -40,8 +40,8 @@
 						</div>
 						<div class="col-sm-4">
 							<div class="form-group">
-								<label for="jabatan_id">Jabatan</label>
-								<select name="jabatan_id" class="form-control select2">
+								<label for="divisi_id">Jabatan</label>
+								<select name="divisi_id" class="form-control select2">
 									<option selected="selected" disabled></option>
 									@foreach ($jabatan as $item)
 										<option value="{{ $item->id }}">{{ $item->nama_jabatan }}</option>

@@ -1,5 +1,5 @@
 @extends('master')
-@section('act-jabatan', 'active')
+@section('act-lokasi', 'active')
 @section('content')
 	<div class="col-sm-8">
 		@if (session('success'))

@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\AbsensiController;
+use App\Http\Controllers\CutiIzinController;
 use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\LatlongController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PromosiDemosiController;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
@@ -30,7 +32,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/absensi', [AbsensiController::class, 'store'])->name('absensi.store');
 
     Route::prefix('absensi')->group(function () {
-        Route::get('/', [AbsensiController::class, 'index'])->name('absensi.index');
+        Route::get('/index-absensi', [AbsensiController::class, 'index'])->name('absensi.index');
     });
 
     // Route::get('/office-location', function () {
@@ -44,5 +46,24 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('jabatan', JabatanController::class);
     Route::resource('karyawan', KaryawanController::class);
+
+    Route::prefix('cutiizin')->group(function () {
+        Route::get('/index-cutiizin', [CutiIzinController::class, 'index'])->name('cutiizin.index');
+        Route::get('/create', [CutiIzinController::class, 'create'])->name('cutiizin.create');
+        Route::post('/store', [CutiIzinController::class, 'store'])->name('cutiizin.store');
+        Route::get('/edit/{id}', [CutiIzinController::class, 'edit'])->name('cutiizin.edit');
+        Route::put('/update/{id}', [CutiIzinController::class, 'update'])->name('cutiizin.update');
+        Route::delete('/destroy/{id}', [CutiIzinController::class, 'destroy'])->name('cutiizin.destroy');
+        Route::put('/status/{id}', [CutiIzinController::class, 'status'])->name('cutiizin.status');
+    });
+    Route::prefix('promosidemosi')->group(function () {
+        Route::get('/index-promosidemosi', [PromosiDemosiController::class, 'index'])->name('promosidemosi.index');
+        Route::get('/create', [PromosiDemosiController::class, 'create'])->name('promosidemosi.create');
+        Route::post('/store', [PromosiDemosiController::class, 'store'])->name('promosidemosi.store');
+        Route::get('/edit/{id}', [PromosiDemosiController::class, 'edit'])->name('promosidemosi.edit');
+        Route::put('/update/{id}', [PromosiDemosiController::class, 'update'])->name('promosidemosi.update');
+        Route::delete('/destroy/{id}', [PromosiDemosiController::class, 'destroy'])->name('promosidemosi.destroy');
+        Route::put('/status/{id}', [PromosiDemosiController::class, 'status'])->name('promosidemosi.status');
+    });
 });
 require __DIR__ . '/auth.php';

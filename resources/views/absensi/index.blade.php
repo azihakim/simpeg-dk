@@ -1,5 +1,5 @@
 @extends('master')
-@section('activeNavbar', 'active')
+@section('act-absensi', 'active')
 @section('content')
 	<div class="col-sm-12">
 		<div class="card">
