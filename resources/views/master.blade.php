@@ -99,27 +99,31 @@
 								</p>
 							</a>
 						</li> --}}
-						<li class="nav-header">REKRUTMEN</li>
-						<li class="nav-item">
-							<a href="{{ route('lowongan.index') }}" class="nav-link">
-								<i class="nav-icon fas fa-newspaper"></i>
-								<p>Lowongan</p>
-							</a>
-						</li>
-						<li class="nav-item">
-							<a href="{{ route('lamaran.index') }}" class="nav-link">
-								<i class="nav-icon fas fa-briefcase"></i>
-								<p>Pelamar</p>
-							</a>
-						</li>
-						<li class="nav-item menu-open">
-							<a href="#" class="nav-link">
-								<i class="nav-icon fas fa-users"></i>
-								<p>
-									Karyawan
-									<i class="right fas fa-angle-left"></i>
-								</p>
-							</a>
+						@if (Auth::user()->jabatan != 'Karyawan')
+							<li class="nav-header">REKRUTMEN</li>
+							<li class="nav-item">
+								<a href="{{ route('lowongan.index') }}" class="nav-link">
+									<i class="nav-icon fas fa-newspaper"></i>
+									<p>Lowongan</p>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="{{ route('lamaran.index') }}" class="nav-link">
+									<i class="nav-icon fas fa-briefcase"></i>
+									<p>Pelamar</p>
+								</a>
+							</li>
+						@endif
+						<li class="nav-item ">
+							@if (Auth::user()->jabatan != 'Pelamar')
+								<a href="#" class="nav-link">
+									<i class="nav-icon fas fa-users"></i>
+									<p>
+										Karyawan
+										<i class="right fas fa-angle-left"></i>
+									</p>
+								</a>
+							@endif
 							<ul class="nav nav-treeview">
 								<li class="nav-item">
 									<a href="{{ route('karyawan.index') }}" class="@yield('act-karyawan') nav-link">
@@ -162,6 +166,22 @@
 										<i class="nav-icon fas fa-bullhorn"></i>
 										<p>
 											Promosi/Demosi
+										</p>
+									</a>
+								</li>
+								<li class="nav-item">
+									<a href="{{ route('resign.index') }}" class="nav-link @yield('act-resign')">
+										<i class="nav-icon fas fa-user-times"></i>
+										<p>
+											Pengunduran Diri
+										</p>
+									</a>
+								</li>
+								<li class="nav-item">
+									<a href="{{ route('rewardpunishment.index') }}" class="nav-link @yield('act-rewardpunishment')">
+										<i class="nav-icon fas fa-gavel"></i>
+										<p>
+											Reward/Punishment
 										</p>
 									</a>
 								</li>

@@ -45,7 +45,9 @@
 							<th>Jabatan Baru</th>
 							<th>Tanggal</th>
 							<th>Status</th>
-							@if (Auth::user()->jabatan == 'Super Admin' || Auth::user()->jabatan == 'Manajer' || Auth::user()->jabatan == 'Admin')
+							@if (Auth::user()->jabatan == 'Super Admin' ||
+									Auth::user()->jabatan == 'Manajer' ||
+									Auth::user()->jabatan == 'Super Admin')
 								<th>Aksi</th>
 							@endif
 						</tr>
@@ -60,7 +62,7 @@
 								<td>{{ $item->created_at->format('d/m/Y') }}</td>
 								<td>{{ $item->status }}</td>
 								<td>
-									@if (Auth::user()->jabatan == 'Super Admin' || Auth::user()->jabatan == 'Admin')
+									@if (Auth::user()->jabatan == 'Super Admin' || Auth::user()->jabatan == 'Super Admin')
 										<a href="{{ route('promosidemosi.edit', $item->id) }}" class="btn btn-outline-warning btn-sm">Edit</a>
 										<form action="{{ route('promosidemosi.destroy', $item->id) }}" method="POST" class="d-inline">
 											@csrf

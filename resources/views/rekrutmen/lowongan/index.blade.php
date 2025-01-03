@@ -49,7 +49,7 @@
 								<td>{{ $item->jabatan->nama_jabatan }}</td>
 								<td>{{ $item->status }}</td>
 								<td>
-									@if (Auth::user()->role == 'Admin')
+									@if (Auth::user()->jabatan == 'Super Admin')
 										<a href="{{ route('lowongan.edit', $item->id) }}" class="btn btn-warning btn-block">Edit</a>
 										<form action="{{ route('lowongan.destroy', $item->id) }}" method="POST" style="display:inline;">
 											@csrf
@@ -58,7 +58,7 @@
 												onclick="return confirm('Are you sure you want to delete this item?');">Delete</button>
 										</form>
 									@endif
-									@if (Auth::user()->role == 'Pelamar')
+									@if (Auth::user()->jabatan == 'Pelamar')
 										<a href="{{ route('lamaran.regist', $item->id) }}" class="btn btn-info btn-block">Lamar</a>
 									@endif
 								</td>

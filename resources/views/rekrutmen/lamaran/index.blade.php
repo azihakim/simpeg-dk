@@ -25,11 +25,11 @@
 			<div class="card-header">
 				<h3 class="card-title">Lamaran</h3>
 
-				{{-- <div class="card-tools">
+				<div class="card-tools">
 					<div class="btn-group">
 						<a href="{{ route('lowongan.create') }}" class="btn btn-outline-primary">Tambah Lowongan</a>
 					</div>
-				</div> --}}
+				</div>
 			</div>
 			<!-- /.card-header -->
 			<div class="card-body">
@@ -49,10 +49,10 @@
 								<td>{{ $item->lowongan->jabatan->nama_jabatan }}</td>
 								<td>{{ $item->status }}</td>
 								<td>
-									@if ($item->status == 'Diajukan' && Auth::user()->role == 'Pelamar')
+									@if ($item->status == 'Diajukan' && Auth::user()->jabatan == 'Pelamar')
 										<a href="{{ route('lamaran.edit', $item->id) }}" class="btn btn-warning btn-block">Edit</a>
 									@endif
-									@if (Auth()->user()->role == 'Admin')
+									@if (Auth()->user()->jabatan == 'Super Admin')
 										<div class="dropdown">
 											<button class="btn btn-outline-info btn-block dropdown-toggle" type="button" id="dropdownMenuOutlineButton1"
 												data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Respon</button>

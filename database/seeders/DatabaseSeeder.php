@@ -49,5 +49,18 @@ class DatabaseSeeder extends Seeder
         foreach ($jabatan as $j) {
             Jabatan::create($j);
         }
+        User::create([
+            'nama' => 'Karyawan 1',
+            'jabatan' => 'Karyawan',
+            'divisi_id' => 2,
+            'status' => '',
+            'status_kerja' => '',
+            'nik' => '',
+            'umur' => '20',
+            'telepon' => '0812343710',
+            'alamat' => 'Jl. Sukamaju',
+            'username' => 'karyawan',
+            'password' => bcrypt('123'),
+        ]);
     }
 }

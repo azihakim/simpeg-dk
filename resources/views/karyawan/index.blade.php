@@ -47,11 +47,11 @@
 						</tr>
 					</thead>
 					<tbody>
-						@foreach ($karyawan as $karyawan)
+						@foreach ($data as $karyawan)
 							<tr>
 								<td>{{ $loop->iteration }}</td>
 								<td>{{ $karyawan->nama }}</td>
-								<td>{{ $karyawan->jabatan->nama_jabatan ?? "-" }}</td>
+								<td>{{ $karyawan->jabatan->nama_jabatan ?? '-' }}</td>
 								<td>{{ $karyawan->alamat }}</td>
 								<td>{{ $karyawan->no_telp }}</td>
 								<td>{{ $karyawan->nik }}</td>

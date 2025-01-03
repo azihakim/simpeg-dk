@@ -28,7 +28,6 @@ class RegistrasiController extends Controller
             $data->username = $request->username;
             $data->password = bcrypt($request->password);
             $data->save();
-            return redirect()->back();
             return redirect()->route('login')->with('success', 'Registrasi berhasil');
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Jabatan;
+use App\Models\Rekrutmen;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -13,8 +13,8 @@ class KaryawanController extends Controller
      */
     public function index()
     {
-        $karyawan = User::where('jabatan', 'Karyawan')->get();
-        return view('karyawan.index', compact('karyawan'));
+        $data = User::where('jabatan', 'Karyawan')->get();
+        return view('karyawan.index', compact('data'));
     }
 
     /**
@@ -22,8 +22,8 @@ class KaryawanController extends Controller
      */
     public function create()
     {
-        $jabatan = Jabatan::all();
-        return view('karyawan.create', compact('jabatan'));
+        $pelamar = Rekrutmen::where('status', 'Diterima')->with('user')->get();
+        return view('karyawan.create', compact('pelamar'));
     }
 
     /**
@@ -33,86 +33,72 @@ class KaryawanController extends Controller
     {
         try {
             $request->validate([
-                'nama' => 'required',
-                'divisi_id' => 'required',
-                'alamat' => 'required',
-                'no_telp' => 'required',
-                'nik' => 'required',
-                'username' => 'nullable',
-                'password' => 'nullable',
+                'nik' => 'unique:users,nik',
             ]);
+            // Find the user by pelamar ID
+            $karyawan = User::find($request->pelamar);
+            $id_pelamar = (int) $request->id_pelamar;
+            $pelamar = Rekrutmen::where('id_pelamar', $id_pelamar)->first();
+            if (!$karyawan) {
+                return redirect()->back()->with('error', 'Data pelamar tidak ditemukan.');
+            }
 
-            $user = new User($request->all());
-            $user->jabatan = 'Karyawan';
-            $user->save();
+            // Assign the request data to the user
+            $karyawan->umur = $request->umur;
+            $karyawan->jenis_kelamin = $request->jenis_kelamin;
+            $karyawan->telepon = $request->telepon;
+            $karyawan->divisi_id = $pelamar->lowongan->id;
+            $karyawan->status = 'Aktif';
+            $karyawan->nik = $request->nik;
+            $karyawan->jabatan = 'Karyawan';
+            // dd($karyawan);
+            // Save the changes
+            $karyawan->save();
 
-            return redirect()->route('karyawan.index')
-                ->with('success', 'Karyawan created successfully');
+
+            $pelamar->delete();
+
+
+            return redirect()->back()->with('success', 'Data karyawan berhasil ditambahkan.');
         } catch (\Exception $e) {
-            return redirect()->route('karyawan.create')
-                ->with('error', 'Error creating Karyawan: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Gagal menambahkan data karyawan: ' . $e->getMessage());
         }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit($id)
     {
-        $jabatan = Jabatan::all();
-        $karyawan = User::find($id);
-        return view('karyawan.edit', compact('karyawan', 'jabatan'));
+        $data = User::find($id);
+        return view('karyawan.edit', compact('data'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, $id)
     {
         try {
-            $request->validate([
-                'nama' => 'required',
-                'jabatan_id' => 'required',
-                'alamat' => 'required',
-                'no_telp' => 'required',
-                'nik' => 'required',
-                'username' => 'nullable',
-                'password' => 'nullable',
+            // Validate input data if necessary
+            $validated = $request->validate([
+                'nama' => 'required|string',
+                'umur' => 'required|integer',
+                'jenis_kelamin' => 'required|string',
+                'telepon' => 'required|string',
+                'nik' => 'unique:users,nik',
             ]);
 
-            $karyawan = User::find($id);
-            $karyawan->update($request->except(['username', 'password']));
+            // Find the employee by ID
+            $karyawan = User::findOrFail($id);
 
-            if ($request->filled('username')) {
-                $karyawan->update(['username' => $request->username]);
-            }
+            // Update the employee data
+            $karyawan->nama = $request->nama;
+            $karyawan->umur = $request->umur;
+            $karyawan->jenis_kelamin = $request->jenis_kelamin;
+            $karyawan->telepon = $request->telepon;
+            $karyawan->nik = $request->nik;
 
-            if ($request->filled('password')) {
-                $karyawan->update(['password' => bcrypt($request->password)]);
-            }
+            // Save the updated data
+            $karyawan->save();
 
-            return redirect()->route('karyawan.index')
-                ->with('success', 'Karyawan updated successfully');
+            return redirect()->route('karyawan.index')->with('success', 'Data karyawan berhasil diperbarui.');
         } catch (\Exception $e) {
-            return redirect()->route('karyawan.edit', $id)
-                ->with('error', 'Error updating Karyawan: ' . $e->getMessage());
-        }
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy($id)
-    {
-        try {
-            $karyawan = User::find($id);
-            $karyawan->delete();
-
-            return redirect()->route('karyawan.index')
-                ->with('success', 'Karyawan deleted successfully');
-        } catch (\Exception $e) {
-            return redirect()->route('karyawan.index')
-                ->with('error', 'Error deleting Karyawan: ' . $e->getMessage());
+            return redirect()->route('karyawan.index')->with('error', 'Gagal memperbarui data karyawan: ' . $e->getMessage());
         }
     }
 }
