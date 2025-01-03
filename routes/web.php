@@ -7,6 +7,8 @@ use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\LatlongController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PromosiDemosiController;
+use App\Http\Controllers\RegistrasiController;
+use App\Http\Controllers\RekrutmenController;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
@@ -65,5 +67,23 @@ Route::middleware('auth')->group(function () {
         Route::delete('/destroy/{id}', [PromosiDemosiController::class, 'destroy'])->name('promosidemosi.destroy');
         Route::put('/status/{id}', [PromosiDemosiController::class, 'status'])->name('promosidemosi.status');
     });
+    Route::prefix('rekrutmen')->group(function () {
+        Route::get('/lowongan', [RekrutmenController::class, 'lowonganIndex'])->name('lowongan.index');
+        Route::get('/lowongan/create', [RekrutmenController::class, 'lowonganCreate'])->name('lowongan.create');
+        Route::post('/lowongan/store', [RekrutmenController::class, 'lowonganStore'])->name('lowongan.store');
+        Route::get('/lowongan/show', [RekrutmenController::class, 'lowonganShow'])->name('lowongan.show');
+        Route::get('/lowongan/edit/{id}', [RekrutmenController::class, 'lowonganEdit'])->name('lowongan.edit');
+        Route::put('/lowongan/update/{id}', [RekrutmenController::class, 'lowonganUpdate'])->name('lowongan.update');
+        Route::delete('/lowongan/{id}', [RekrutmenController::class, 'lowonganDestroy'])->name('lowongan.destroy');
+
+        Route::get('/lamaran', [RekrutmenController::class, 'lamaranIndex'])->name('lamaran.index');
+        Route::get('/lamaran/regist/{id}', [RekrutmenController::class, 'lamaranRegist'])->name('lamaran.regist');
+        Route::post('/lamaran/store', [RekrutmenController::class, 'lamaranStore'])->name('lamaran.store');
+        Route::get('/lamaran/edit/{id}', [RekrutmenController::class, 'lamaranEdit'])->name('lamaran.edit');
+        Route::put('/lamaran/update/{id}', [RekrutmenController::class, 'lamaranUpdate'])->name('lamaran.update');
+        Route::put('/lamaran/status/{id}', [RekrutmenController::class, 'lamaranStatus'])->name('lamaran.status');
+    });
 });
+Route::get('/registrasi', [RegistrasiController::class, 'create'])->name('registrasi.form');
+Route::post('/registrasi', [RegistrasiController::class, 'store'])->name('registrasi.store');
 require __DIR__ . '/auth.php';

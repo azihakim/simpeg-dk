@@ -59,7 +59,7 @@
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item dropdown">
 					<a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
-						{{ Auth::user()->nama ?? (Auth::user()->username ?? 'none') }} - {{ Auth::user()->role ?? 'none' }}
+						{{ Auth::user()->nama ?? (Auth::user()->username ?? 'none') }} - {{ Auth::user()->jabatan ?? 'none' }}
 						&nbsp;&nbsp;<i class="far fa-user"></i>
 					</a>
 					<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;">
@@ -99,6 +99,19 @@
 								</p>
 							</a>
 						</li> --}}
+						<li class="nav-header">REKRUTMEN</li>
+						<li class="nav-item">
+							<a href="{{ route('lowongan.index') }}" class="nav-link">
+								<i class="nav-icon fas fa-newspaper"></i>
+								<p>Lowongan</p>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="{{ route('lamaran.index') }}" class="nav-link">
+								<i class="nav-icon fas fa-briefcase"></i>
+								<p>Pelamar</p>
+							</a>
+						</li>
 						<li class="nav-item menu-open">
 							<a href="#" class="nav-link">
 								<i class="nav-icon fas fa-users"></i>
