@@ -94,7 +94,7 @@ class CutiIzinController extends Controller
         $data->status = $request->status;
 
         $absensi = new Absensi();
-        $absensi->user_id = $data->id_karyawan;
+        $absensi->id_karyawan = $data->id_karyawan;
         $absensi->created_at = $data->tanggal_mulai;
         $absensi->created_at = $data->tanggal_selesai;
         $start = strtotime($data->tanggal_mulai);
@@ -102,7 +102,7 @@ class CutiIzinController extends Controller
 
         for ($date = $start; $date <= $end; $date = strtotime('+1 day', $date)) {
             $absensi = new Absensi();
-            $absensi->user_id = $data->id_karyawan;
+            $absensi->id_karyawan = $data->id_karyawan;
             $absensi->created_at = date('Y-m-d', $date);
             $absensi->keterangan = $data->jenis;
             $absensi->foto = $data->jenis;

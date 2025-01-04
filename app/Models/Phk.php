@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Phk extends Model
 {
-    use HasFactory;
-    protected $fillable = ['user_id', 'surat', 'keterangan'];
+ use HasFactory;
+ protected $fillable = ['id_karyawan', 'surat', 'keterangan'];
 
-    function user()
-    {
-        return $this->belongsTo(User::class);
-    }
+ function user()
+ {
+  return $this->belongsTo(User::class);
+ }
 }

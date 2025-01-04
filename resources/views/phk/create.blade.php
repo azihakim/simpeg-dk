@@ -19,7 +19,7 @@
 				<div class="row">
 					<div class="form-group col-md-12">
 						<label>Karyawan</label>
-						<select required name="user_id" class="form-control" id="id_karyawan" style="width:100%">
+						<select required name="id_karyawan" class="form-control" id="id_karyawan" style="width:100%">
 							<option value="">Pilih Karyawan</option>
 							@foreach ($karyawan as $item)
 								<option value="{{ $item->id }}" data-divisi_lama="{{ $item->divisi }}">{{ $item->nama }} -

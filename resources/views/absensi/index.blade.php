@@ -36,7 +36,7 @@
 						@foreach ($dataAbsen as $item)
 							<tr>
 								<td>{{ $loop->iteration }}</td>
-								<td>{{ $item->user->nama ?? $item->user->username }}</td>
+								<td>{{ $item->user->nama ?? '' }}</td>
 								<td>{{ \Carbon\Carbon::parse($item->created_at)->format('d F Y') }}</td>
 								<td>{{ $item->keterangan }}</td>
 								<td><img src="{{ asset('storage/' . $item->foto) }}" alt="Foto" style="width: 100px; height: auto;">
