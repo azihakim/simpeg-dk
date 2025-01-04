@@ -10,11 +10,14 @@
 					<div class="btn-group">
 						<button type="button" class="btn btn-outline-primary" id="btnAbsen" data-toggle="modal"
 							data-target="#exampleModal">Absen</button>
-						<button type="button" class="btn btn-outline-warning" id="btnRekap">Rekap</button>
+						<button type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#rekapAbsensi">
+							Rekap Absen
+						</button>
 
 					</div>
 
 					@include('absensi.modalAbsen')
+					@include('absensi.modalRekap')
 				</div>
 			</div>
 			<!-- /.card-header -->

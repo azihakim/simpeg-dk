@@ -14,7 +14,7 @@ class Absensi extends Model
         'latitude',
         'longitude',
         'status',
-        'user_id',
+        'id_karyawan',
     ];
 
     function user()

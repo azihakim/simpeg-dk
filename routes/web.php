@@ -5,6 +5,7 @@ use App\Http\Controllers\CutiIzinController;
 use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\LatlongController;
+use App\Http\Controllers\PhkController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PromosiDemosiController;
 use App\Http\Controllers\RegistrasiController;
@@ -38,6 +39,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('absensi')->group(function () {
         Route::get('/index-absensi', [AbsensiController::class, 'index'])->name('absensi.index');
     });
+    Route::post('/rekap', [AbsensiController::class, 'rekap'])->name('absensi.rekap');
 
     // Route::get('/office-location', function () {
     //     return response()->json([
@@ -102,6 +104,15 @@ Route::middleware('auth')->group(function () {
         Route::put('/update/{id}', [RewardPunishmentController::class, 'update'])->name('rewardpunishment.update');
         Route::delete('/destroy/{id}', [RewardPunishmentController::class, 'destroy'])->name('rewardpunishment.destroy');
         Route::put('/status/{id}', [RewardPunishmentController::class, 'status'])->name('rewardpunishment.status');
+    });
+    Route::prefix('phk')->group(function () {
+        Route::get('/index-phk', [PhkController::class, 'index'])->name('phk.index');
+        Route::get('/create', [PhkController::class, 'create'])->name('phk.create');
+        Route::post('/store', [PhkController::class, 'store'])->name('phk.store');
+        Route::get('/edit/{id}', [PhkController::class, 'edit'])->name('phk.edit');
+        Route::put('/update/{id}', [PhkController::class, 'update'])->name('phk.update');
+        Route::delete('/destroy/{id}', [PhkController::class, 'destroy'])->name('phk.destroy');
+        Route::put('/status/{id}', [PhkController::class, 'status'])->name('phk.status');
     });
 });
 Route::get('/registrasi', [RegistrasiController::class, 'create'])->name('registrasi.form');

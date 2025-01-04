@@ -185,6 +185,14 @@
 										</p>
 									</a>
 								</li>
+								<li class="nav-item">
+									<a href="{{ route('phk.index') }}" class="nav-link @yield('act-phk')">
+										<i class="nav-icon fas fa-users-slash"></i>
+										<p>
+											PHK
+										</p>
+									</a>
+								</li>
 							</ul>
 						</li>
 

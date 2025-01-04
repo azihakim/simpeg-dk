@@ -17,8 +17,8 @@ return new class extends Migration
             $table->decimal('longitude', 11, 8)->nullable();
             $table->string('keterangan');
             $table->string('foto');
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('id_karyawan');
+            $table->foreign('id_karyawan')->references('id')->on('users');
             $table->boolean('status')->default(0); // 0: diluar jangkauan, 1: dalam jangkauan
             $table->timestamps();
         });

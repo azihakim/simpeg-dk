@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Absensi;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Container\Attributes\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage as FacadesStorage;
@@ -92,7 +94,7 @@ class AbsensiController extends Controller
         // $absensi->location_data = $validated['locationData'];
         $absensi->latitude = $validated['latitude'];
         $absensi->longitude = $validated['longitude'];
-        $absensi->user_id =  auth()->user()->id;
+        $absensi->id_karyawan =  auth()->user()->id;
         $absensi->foto = $path; // Simpan path gambar di database
         $absensi->save();
 
@@ -116,5 +118,64 @@ class AbsensiController extends Controller
         $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
 
         return $earthRadius * $c;
+    }
+
+    public function rekap(Request $request)
+    {
+        $tanggal_dari = $request->input('tanggal_dari');
+        $tanggal_sampai = $request->input('tanggal_sampai');
+
+        if (!$tanggal_dari || !$tanggal_sampai) {
+            return back()->withErrors(['error' => 'Tanggal dari dan sampai harus diisi!']);
+        }
+
+        $tanggal_range = collect();
+
+        // Generate range tanggal
+        $start = Carbon::parse($tanggal_dari);
+        $end = Carbon::parse($tanggal_sampai);
+        while ($start->lte($end)) {
+            $tanggal_range->push($start->format('Y-m-d'));
+            $start->addDay();
+        }
+
+        // Ambil data karyawan dan absensi
+        $data_karyawan = User::where('jabatan', 'Karyawan')->with(['absensi' => function ($query) use ($tanggal_dari, $tanggal_sampai) {
+            $query->whereBetween('created_at', [$tanggal_dari, $tanggal_sampai]);
+        }])->get()->map(function ($karyawan) use ($tanggal_range) {
+            // Group absensi berdasarkan tanggal
+            $absensi = $karyawan->absensi->groupBy(function ($absensi) {
+                return Carbon::parse($absensi->created_at)->format('Y-m-d');
+            });
+
+            // Hitung kehadiran unik per tanggal (hanya "masuk")
+            $hadir = $absensi->filter(function ($records) {
+                return $records->pluck('keterangan')->contains('masuk');
+            })->count();
+
+            $persentase = ($hadir / $tanggal_range->count()) * 100;
+
+            // Map absensi per tanggal
+            $mapped_absensi = $tanggal_range->mapWithKeys(function ($date) use ($absensi) {
+                if ($absensi->has($date)) {
+                    $keterangan = $absensi[$date]->pluck('keterangan')->unique()->join(', ');
+                } else {
+                    $keterangan = '-';
+                }
+
+                return [$date => $keterangan];
+            });
+
+            return [
+                'nama' => $karyawan->nama,
+                'absensi' => $mapped_absensi,
+                'persentase' => round($persentase, 2),
+            ];
+        });
+        // return view('absensi.rekapPdf', compact('tanggal_dari', 'tanggal_sampai', 'tanggal_range', 'data_karyawan'));
+        $pdf = app('dompdf.wrapper');
+        $pdf->loadView('absensi.rekapPdf', compact('tanggal_dari', 'tanggal_sampai', 'tanggal_range', 'data_karyawan'))
+            ->setPaper('a3', 'landscape');
+        return $pdf->download('rekap-absensi.pdf');
     }
 }
