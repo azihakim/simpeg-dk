@@ -7,14 +7,22 @@
 				<h3 class="card-title">Absensi</h3>
 
 				<div class="card-tools">
-					<div class="btn-group">
-						<button type="button" class="btn btn-outline-primary" id="btnAbsen" data-toggle="modal"
-							data-target="#exampleModal">Absen</button>
-						<button type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#rekapAbsensi">
-							Rekap Absen
-						</button>
-
-					</div>
+					@if (Auth::user()->jabatan == 'Super Admin' ||
+							Auth::user()->jabatan == 'Karyawan' ||
+							Auth::user()->jabatan == 'Pimpinan')
+						<div class="btn-group">
+							@if (Auth::user()->jabatan == 'Super Admin' || Auth::user()->jabatan == 'Karyawan')
+								<button type="button" class="btn btn-outline-primary" id="btnAbsen" data-toggle="modal"
+									data-target="#exampleModal">Absen</button>
+							@endif
+							@if (Auth::user()->jabatan == 'Super Admin' ||
+									(Auth::user()->jabatan != 'Karyawan' && Auth::user()->jabatan == 'Pimpinan'))
+								<button type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#rekapAbsensi">
+									Rekap Absen
+								</button>
+							@endif
+						</div>
+					@endif
 
 					@include('absensi.modalAbsen')
 					@include('absensi.modalRekap')

@@ -18,7 +18,9 @@
 
 				<div class="card-tools">
 					<div class="btn-group">
-						@if (Auth::user()->jabatan == 'Super Admin' || Auth::user()->jabatan == 'Karyawan')
+						@if (Auth::user()->jabatan == 'Super Admin' ||
+								Auth::user()->jabatan != 'Karyawan' ||
+								Auth::user()->jabatan == 'Pimpinan')
 							<a href="{{ route('rewardpunishment.create') }}" class="btn btn-outline-primary btn-icon-text">
 								<i class="fa fa-plus-square btn-icon-prepend"></i> Tambah Reward/Punishment Karyawan</a>
 						@endif
@@ -37,7 +39,7 @@
 							<th>Reward</th>
 							<th>Surat Punishment</th>
 							<th>Status</th>
-							@if (Auth()->user()->jabatan == 'Super Admin' || Auth::user()->jabatan == 'Pengadaan')
+							@if (Auth()->user()->jabatan == 'Super Admin' || Auth::user()->jabatan == 'Pimpinan')
 								<th>Aksi</th>
 							@endif
 						</tr>
@@ -58,11 +60,9 @@
 									@endif
 								</td>
 								<td>{{ $item->status }}</td>
-								@if (Auth()->user()->jabatan == 'Super Admin' ||
-										Auth::user()->jabatan == 'Pengadaan' ||
-										Auth::user()->jabatan == 'Direktur')
+								@if (Auth()->user()->jabatan == 'Super Admin' || Auth::user()->jabatan == 'Pimpinan')
 									<td>
-										@if (Auth()->user()->jabatan == 'Super Admin' || Auth::user()->jabatan == 'Pengadaan')
+										@if (Auth()->user()->jabatan == 'Super Admin' || Auth::user()->jabatan == 'Pimpinan')
 											<a href="{{ route('rewardpunishment.edit', $item->id) }}" class="btn btn-sm btn-warning">Edit</a>
 											<form action="{{ route('rewardpunishment.destroy', $item->id) }}" method="POST"
 												style="display: inline-block;" onsubmit="return confirm('Yakin ingin menghapus data ini?');">
@@ -72,7 +72,7 @@
 											</form>
 										@endif
 
-										@if (Auth()->user()->jabatan == 'Super Admin' || Auth()->user()->jabatan == 'Direktur')
+										@if (Auth()->user()->jabatan == 'Super Admin' || Auth()->user()->jabatan == 'Pimpinan')
 											<div class="btn-group">
 												<button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown"
 													aria-haspopup="true" aria-expanded="false">

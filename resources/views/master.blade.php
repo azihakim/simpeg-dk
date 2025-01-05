@@ -99,23 +99,25 @@
 								</p>
 							</a>
 						</li> --}}
-						@if (Auth::user()->jabatan != 'Karyawan')
+						@if (Auth::user()->jabatan == 'Super Admin' ||
+								Auth::user()->jabatan == 'Pimpinan' ||
+								Auth::user()->jabatan != 'Karyawan')
 							<li class="nav-header">REKRUTMEN</li>
 							<li class="nav-item">
-								<a href="{{ route('lowongan.index') }}" class="nav-link">
+								<a href="{{ route('lowongan.index') }}" class="@yield('act-lowongan') nav-link">
 									<i class="nav-icon fas fa-newspaper"></i>
 									<p>Lowongan</p>
 								</a>
 							</li>
 							<li class="nav-item">
-								<a href="{{ route('lamaran.index') }}" class="nav-link">
+								<a href="{{ route('lamaran.index') }}" class="@yield('act-lamaran') nav-link">
 									<i class="nav-icon fas fa-briefcase"></i>
 									<p>Pelamar</p>
 								</a>
 							</li>
 						@endif
-						<li class="nav-item ">
-							@if (Auth::user()->jabatan != 'Pelamar')
+						<li class="nav-item menu-open">
+							@if (Auth::user()->jabatan == 'Super Admin' || Auth::user()->jabatan == 'Pimpinan' || Auth::user()->jabatan != 'Pelamar')
 								<a href="#" class="nav-link">
 									<i class="nav-icon fas fa-users"></i>
 									<p>
@@ -125,74 +127,110 @@
 								</a>
 							@endif
 							<ul class="nav nav-treeview">
-								<li class="nav-item">
-									<a href="{{ route('karyawan.index') }}" class="@yield('act-karyawan') nav-link">
-										<i class="fas fa-database nav-icon"></i>
-										<p>Data Karyawan</p>
-									</a>
-								</li>
-								<li class="nav-item">
-									<a href="{{ route('jabatan.index') }}" class="@yield('act-jabatan') nav-link">
-										<i class="fas fa-users nav-icon"></i>
-										<p>Jabatan</p>
-									</a>
-								</li>
-								<li class="nav-item">
-									<a href="{{ route('absensi.index') }}" class="nav-link @yield('act-absensi')">
-										<i class="nav-icon fas fa-calendar"></i>
-										<p>
-											Absensi
-										</p>
-									</a>
-								</li>
-								<li class="nav-item">
-									<a href="{{ route('location.index') }}" class="nav-link @yield('act-lokasi')">
-										<i class="nav-icon fas fa-building"></i>
-										<p>
-											Lokasi
-										</p>
-									</a>
-								</li>
-								<li class="nav-item">
-									<a href="{{ route('cutiizin.index') }}" class="nav-link @yield('act-cutiizin')">
-										<i class="nav-icon fas fa-calendar-times"></i>
-										<p>
-											Cuti/Izin
-										</p>
-									</a>
-								</li>
-								<li class="nav-item">
-									<a href="{{ route('promosidemosi.index') }}" class="nav-link @yield('act-promosidemosi')">
-										<i class="nav-icon fas fa-bullhorn"></i>
-										<p>
-											Promosi/Demosi
-										</p>
-									</a>
-								</li>
-								<li class="nav-item">
-									<a href="{{ route('resign.index') }}" class="nav-link @yield('act-resign')">
-										<i class="nav-icon fas fa-user-times"></i>
-										<p>
-											Pengunduran Diri
-										</p>
-									</a>
-								</li>
-								<li class="nav-item">
-									<a href="{{ route('rewardpunishment.index') }}" class="nav-link @yield('act-rewardpunishment')">
-										<i class="nav-icon fas fa-gavel"></i>
-										<p>
-											Reward/Punishment
-										</p>
-									</a>
-								</li>
-								<li class="nav-item">
-									<a href="{{ route('phk.index') }}" class="nav-link @yield('act-phk')">
-										<i class="nav-icon fas fa-users-slash"></i>
-										<p>
-											PHK
-										</p>
-									</a>
-								</li>
+								@if (Auth::user()->jabatan == 'Super Admin' ||
+										Auth::user()->jabatan == 'Pimpinan' ||
+										Auth::user()->jabatan != 'Karyawan')
+									<li class="nav-item">
+										<a href="{{ route('karyawan.index') }}" class="@yield('act-karyawan') nav-link">
+											<i class="fas fa-database nav-icon"></i>
+											<p>Data Karyawan</p>
+										</a>
+									</li>
+								@endif
+								@if (Auth::user()->jabatan == 'Super Admin' ||
+										Auth::user()->jabatan == 'Pimpinan' ||
+										Auth::user()->jabatan == 'Karyawan')
+									<li class="nav-item">
+										<a href="{{ route('jabatan.index') }}" class="@yield('act-jabatan') nav-link">
+											<i class="fas fa-users nav-icon"></i>
+											<p>Jabatan</p>
+										</a>
+									</li>
+								@endif
+								@if (Auth::user()->jabatan == 'Super Admin' ||
+										Auth::user()->jabatan == 'Pimpinan' ||
+										Auth::user()->jabatan == 'Karyawan')
+									<li class="nav-item">
+										<a href="{{ route('absensi.index') }}" class="nav-link @yield('act-absensi')">
+											<i class="nav-icon fas fa-calendar"></i>
+											<p>
+												Absensi
+											</p>
+										</a>
+									</li>
+								@endif
+								@if (Auth::user()->jabatan == 'Super Admin' ||
+										Auth::user()->jabatan == 'Pimpinan' ||
+										Auth::user()->jabatan != 'Karyawan')
+									<li class="nav-item">
+										<a href="{{ route('location.index') }}" class="nav-link @yield('act-lokasi')">
+											<i class="nav-icon fas fa-building"></i>
+											<p>
+												Lokasi
+											</p>
+										</a>
+									</li>
+								@endif
+								@if (Auth::user()->jabatan == 'Super Admin' ||
+										Auth::user()->jabatan == 'Pimpinan' ||
+										Auth::user()->jabatan == 'Karyawan')
+									<li class="nav-item">
+										<a href="{{ route('cutiizin.index') }}" class="nav-link @yield('act-cutiizin')">
+											<i class="nav-icon fas fa-calendar-times"></i>
+											<p>
+												Cuti/Izin
+											</p>
+										</a>
+									</li>
+								@endif
+								@if (Auth::user()->jabatan == 'Super Admin' ||
+										Auth::user()->jabatan == 'Pimpinan' ||
+										Auth::user()->jabatan == 'Karyawan')
+									<li class="nav-item">
+										<a href="{{ route('promosidemosi.index') }}" class="nav-link @yield('act-promosidemosi')">
+											<i class="nav-icon fas fa-bullhorn"></i>
+											<p>
+												Promosi/Demosi
+											</p>
+										</a>
+									</li>
+								@endif
+								@if (Auth::user()->jabatan == 'Super Admin' ||
+										Auth::user()->jabatan == 'Pimpinan' ||
+										Auth::user()->jabatan == 'Karyawan')
+									<li class="nav-item">
+										<a href="{{ route('resign.index') }}" class="nav-link @yield('act-resign')">
+											<i class="nav-icon fas fa-user-times"></i>
+											<p>
+												Pengunduran Diri
+											</p>
+										</a>
+									</li>
+								@endif
+								@if (Auth::user()->jabatan == 'Super Admin' ||
+										Auth::user()->jabatan == 'Pimpinan' ||
+										Auth::user()->jabatan == 'Karyawan')
+									<li class="nav-item">
+										<a href="{{ route('rewardpunishment.index') }}" class="nav-link @yield('act-rewardpunishment')">
+											<i class="nav-icon fas fa-gavel"></i>
+											<p>
+												Reward/Punishment
+											</p>
+										</a>
+									</li>
+								@endif
+								@if (Auth::user()->jabatan == 'Super Admin' ||
+										Auth::user()->jabatan == 'Pimpinan' ||
+										Auth::user()->jabatan == 'Karyawan')
+									<li class="nav-item">
+										<a href="{{ route('phk.index') }}" class="nav-link @yield('act-phk')">
+											<i class="nav-icon fas fa-users-slash"></i>
+											<p>
+												PHK
+											</p>
+										</a>
+									</li>
+								@endif
 							</ul>
 						</li>
 

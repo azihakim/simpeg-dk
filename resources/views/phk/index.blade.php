@@ -14,11 +14,12 @@
 		@endif
 		<div class="card">
 			<div class="card-header">
-				<h3 class="card-title">Reward/Punishment</h3>
+				<h3 class="card-title">PHK</h3>
 
 				<div class="card-tools">
 					<div class="btn-group">
-						@if (Auth::user()->jabatan == 'Super Admin' || Auth::user()->jabatan == 'Karyawan')
+						@if (Auth::user()->jabatan == 'Super Admin' ||
+								(Auth::user()->jabatan != 'Karyawan' && Auth::user()->jabatan != 'Pimpinan'))
 							<a href="{{ route('phk.create') }}" class="btn btn-outline-primary btn-icon-text">
 								<i class="fa fa-plus-square btn-icon-prepend"></i> Tambah PHK</a>
 						@endif
@@ -35,9 +36,7 @@
 							<th>Status</th>
 							<th>Surat</th>
 							<th>Keterangan</th>
-							@if (Auth()->user()->jabatan == 'Super Admin' ||
-									Auth()->user()->jabatan == 'Direktur' ||
-									Auth::user()->jabatan == 'Pengadaan')
+							@if (Auth()->user()->jabatan == 'Super Admin' || Auth()->user()->jabatan == 'Pimpinan')
 								<th>Aksi</th>
 							@endif
 						</tr>
@@ -46,7 +45,7 @@
 						@foreach ($data as $item)
 							<tr>
 								<td>{{ $loop->iteration }}</td>
-								<td>{{ $item->user->nama }}</td>
+								<td>{{ $item->user->nama ?? '' }}</td>
 								<td>
 									@if ($item->status == 'Menunggu')
 										<span class="badge badge-warning">{{ $item->status }}</span>
@@ -61,9 +60,7 @@
 										Surat</a>
 								</td>
 								<td>{{ $item->keterangan }}</td>
-								@if (Auth::user()->jabatan == 'Super Admin' ||
-										Auth::user()->jabatan == 'Direktur' ||
-										Auth::user()->jabatan == 'Pengadaan')
+								@if (Auth::user()->jabatan == 'Super Admin' || Auth::user()->jabatan == 'Pimpinan')
 									<td>
 										<div class="btn-group">
 											<button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown"
@@ -71,7 +68,7 @@
 												Aksi
 											</button>
 											<div class="dropdown-menu">
-												@if (Auth()->user()->jabatan == 'Super Admin' || Auth()->user()->jabatan == 'Direktur')
+												@if (Auth()->user()->jabatan == 'Super Admin' || Auth()->user()->jabatan == 'Pimpinan')
 													<h6 class="dropdown-header">Ubah Status</h6>
 													<form action="{{ route('phk.status', $item->id) }}" method="POST" style="display:inline;">
 														@csrf
@@ -97,7 +94,7 @@
 												@endif
 											</div>
 										</div>
-										@if (Auth()->user()->jabatan == 'Super Admin' || Auth::user()->jabatan == 'Pengadaan')
+										@if (Auth()->user()->jabatan == 'Super Admin' && Auth::user()->jabatan != 'Pimpinan')
 											<a href="{{ route('phk.edit', $item->id) }}" class="btn btn-outline-warning">Edit</a>
 											<form action="{{ route('phk.destroy', $item->id) }}" method="POST" class="d-inline">
 												@csrf
