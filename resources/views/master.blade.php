@@ -117,7 +117,7 @@
 								</a>
 							</li>
 						@endif
-						<li class="nav-item menu-open">
+						<li class="nav-item">
 							@if (Auth::user()->jabatan == 'Super Admin' || Auth::user()->jabatan == 'Pimpinan' || Auth::user()->jabatan != 'Pelamar')
 								<a href="#" class="nav-link">
 									<i class="nav-icon fas fa-users"></i>
@@ -229,6 +229,17 @@
 											<p>
 												PHK
 											</p>
+										</a>
+									</li>
+								@endif
+								@if (Auth::user()->jabatan == 'Super Admin' ||
+										Auth::user()->jabatan == 'Pimpinan' ||
+										Auth::user()->jabatan == 'Karyawan' ||
+										Auth::user()->jabatan == 'Admin')
+									<li class="nav-item">
+										<a href="{{ route('user.index') }}" class="nav-link @yield('act-user')">
+											<i class="nav-icon fa fa-laptop"></i>
+											<p>Data Pengguna</p>
 										</a>
 									</li>
 								@endif
