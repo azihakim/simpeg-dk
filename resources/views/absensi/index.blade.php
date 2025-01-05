@@ -9,13 +9,15 @@
 				<div class="card-tools">
 					@if (Auth::user()->jabatan == 'Super Admin' ||
 							Auth::user()->jabatan == 'Karyawan' ||
-							Auth::user()->jabatan == 'Pimpinan')
+							Auth::user()->jabatan == 'Pimpinan' ||
+							Auth::user()->jabatan == 'Admin')
 						<div class="btn-group">
 							@if (Auth::user()->jabatan == 'Super Admin' || Auth::user()->jabatan == 'Karyawan')
 								<button type="button" class="btn btn-outline-primary" id="btnAbsen" data-toggle="modal"
 									data-target="#exampleModal">Absen</button>
 							@endif
 							@if (Auth::user()->jabatan == 'Super Admin' ||
+									Auth::user()->jabatan == 'Admin' ||
 									(Auth::user()->jabatan != 'Karyawan' && Auth::user()->jabatan == 'Pimpinan'))
 								<button type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#rekapAbsensi">
 									Rekap Absen

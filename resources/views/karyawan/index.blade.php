@@ -45,7 +45,7 @@
 							<th>Alamat</th>
 							<th>No. Telp</th>
 							<th>NIK</th>
-							@if (Auth::user()->jabatan == 'Super Admin')
+							@if (Auth::user()->jabatan == 'Super Admin' || Auth::user()->jabatan == 'Admin')
 								<th style="width: 15%">Aksi</th>
 							@endif
 						</tr>
@@ -59,7 +59,7 @@
 								<td>{{ $karyawan->alamat }}</td>
 								<td>{{ $karyawan->no_telp }}</td>
 								<td>{{ $karyawan->nik }}</td>
-								@if (Auth::user()->jabatan == 'Super Admin')
+								@if (Auth::user()->jabatan == 'Super Admin' || Auth::user()->jabatan == 'Admin')
 									<td>
 										<a href="{{ route('karyawan.edit', $karyawan->id) }}" class="btn btn-warning btn-sm">Edit</a>
 										<form action="{{ route('karyawan.destroy', $karyawan->id) }}" method="POST" style="display:inline;">

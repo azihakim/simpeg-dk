@@ -101,6 +101,7 @@
 						</li> --}}
 						@if (Auth::user()->jabatan == 'Super Admin' ||
 								Auth::user()->jabatan == 'Pimpinan' ||
+								Auth::user()->jabatan == 'Admin' ||
 								Auth::user()->jabatan != 'Karyawan')
 							<li class="nav-header">REKRUTMEN</li>
 							<li class="nav-item">
@@ -149,7 +150,8 @@
 								@endif
 								@if (Auth::user()->jabatan == 'Super Admin' ||
 										Auth::user()->jabatan == 'Pimpinan' ||
-										Auth::user()->jabatan == 'Karyawan')
+										Auth::user()->jabatan == 'Karyawan' ||
+										Auth::user()->jabatan == 'Admin')
 									<li class="nav-item">
 										<a href="{{ route('absensi.index') }}" class="nav-link @yield('act-absensi')">
 											<i class="nav-icon fas fa-calendar"></i>
@@ -159,9 +161,7 @@
 										</a>
 									</li>
 								@endif
-								@if (Auth::user()->jabatan == 'Super Admin' ||
-										Auth::user()->jabatan == 'Pimpinan' ||
-										Auth::user()->jabatan != 'Karyawan')
+								@if (Auth::user()->jabatan == 'Super Admin')
 									<li class="nav-item">
 										<a href="{{ route('location.index') }}" class="nav-link @yield('act-lokasi')">
 											<i class="nav-icon fas fa-building"></i>
@@ -221,7 +221,8 @@
 								@endif
 								@if (Auth::user()->jabatan == 'Super Admin' ||
 										Auth::user()->jabatan == 'Pimpinan' ||
-										Auth::user()->jabatan == 'Karyawan')
+										Auth::user()->jabatan == 'Karyawan' ||
+										Auth::user()->jabatan == 'Admin')
 									<li class="nav-item">
 										<a href="{{ route('phk.index') }}" class="nav-link @yield('act-phk')">
 											<i class="nav-icon fas fa-users-slash"></i>

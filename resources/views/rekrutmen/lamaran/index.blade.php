@@ -27,7 +27,7 @@
 				<h3 class="card-title">Lamaran</h3>
 
 				<div class="card-tools">
-					@if (Auth::user()->jabatan == 'Super Admin' || Auth::user()->jabatan != 'Pimpinan')
+					@if (Auth::user()->jabatan == 'Super Admin' || (Auth::user()->jabatan != 'Pimpinan' && Auth::user()->jabatan != 'Admin'))
 						<div class="btn-group">
 							<a href="{{ route('lowongan.create') }}" class="btn btn-outline-primary">Tambah Lowongan</a>
 						</div>
