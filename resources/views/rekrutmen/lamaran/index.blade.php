@@ -28,9 +28,9 @@
 
 				<div class="card-tools">
 					@if (Auth::user()->jabatan == 'Super Admin' || (Auth::user()->jabatan != 'Pimpinan' && Auth::user()->jabatan != 'Admin'))
-						<div class="btn-group">
+						{{-- <div class="btn-group">
 							<a href="{{ route('lowongan.create') }}" class="btn btn-outline-primary">Tambah Lowongan</a>
-						</div>
+						</div> --}}
 					@endif
 				</div>
 			</div>
