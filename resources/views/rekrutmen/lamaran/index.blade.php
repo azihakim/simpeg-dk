@@ -42,7 +42,7 @@
 							<th style="width: 5px">#</th>
 							<th>Jabatan</th>
 							<th style="width: 20%">Status</th>
-							@if (Auth::user()->jabatan == 'Super Admin')
+							@if (Auth::user()->jabatan == 'Super Admin' || Auth()->user()->jabatan == 'Admin')
 								<th style="width: 30%">Aksi</th>
 							@endif
 						</tr>
@@ -53,12 +53,12 @@
 								<td>{{ $loop->iteration }}</td>
 								<td>{{ $item->lowongan->jabatan->nama_jabatan }}</td>
 								<td>{{ $item->status }}</td>
-								@if (Auth::user()->jabatan == 'Super Admin')
+								@if (Auth::user()->jabatan == 'Super Admin' || Auth()->user()->jabatan == 'Admin')
 									<td>
 										@if ($item->status == 'Diajukan' && Auth::user()->jabatan == 'Pelamar')
 											<a href="{{ route('lamaran.edit', $item->id) }}" class="btn btn-warning btn-block">Edit</a>
 										@endif
-										@if (Auth()->user()->jabatan == 'Super Admin')
+										@if (Auth()->user()->jabatan == 'Super Admin' || Auth()->user()->jabatan == 'Admin')
 											<div class="dropdown">
 												<button class="btn btn-outline-info btn-block dropdown-toggle" type="button" id="dropdownMenuOutlineButton1"
 													data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Respon</button>
