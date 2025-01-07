@@ -38,7 +38,9 @@
 									<th>#</th>
 									<th>Nama Pengguna</th>
 									<th>Role</th>
-									<th>Aksi</th>
+									@if (Auth::user()->jabatan == 'Super Admin' || Auth::user()->jabatan == 'Admin')
+										<th>Aksi</th>
+									@endif
 								</tr>
 							</thead>
 							<tbody>
@@ -47,14 +49,16 @@
 										<td>{{ $loop->iteration }}</td>
 										<td>{{ $item->nama }}</td>
 										<td>{{ $item->jabatan }}</td>
-										<td>
-											<a href="{{ route('user.edit', $item->id) }}" class="btn btn-warning">Edit</a>
-											<form action="{{ route('user.destroy', $item->id) }}" method="POST" class="d-inline">
-												@csrf
-												@method('DELETE')
-												<button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda Yakin?')">Hapus</button>
-											</form>
-										</td>
+										@if (Auth::user()->jabatan == 'Super Admin' || Auth::user()->jabatan == 'Admin')
+											<td>
+												<a href="{{ route('user.edit', $item->id) }}" class="btn btn-warning">Edit</a>
+												<form action="{{ route('user.destroy', $item->id) }}" method="POST" class="d-inline">
+													@csrf
+													@method('DELETE')
+													<button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda Yakin?')">Hapus</button>
+												</form>
+											</td>
+										@endif
 									</tr>
 								@endforeach
 							</tbody>
