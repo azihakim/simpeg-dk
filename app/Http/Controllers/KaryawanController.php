@@ -74,14 +74,6 @@ class KaryawanController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            // Validate input data if necessary
-            $validated = $request->validate([
-                'nama' => 'required|string',
-                'umur' => 'required|integer',
-                'jenis_kelamin' => 'required|string',
-                'telepon' => 'required|string',
-                'nik' => 'unique:users,nik',
-            ]);
 
             // Find the employee by ID
             $karyawan = User::findOrFail($id);
@@ -99,6 +91,21 @@ class KaryawanController extends Controller
             return redirect()->route('karyawan.index')->with('success', 'Data karyawan berhasil diperbarui.');
         } catch (\Exception $e) {
             return redirect()->route('karyawan.index')->with('error', 'Gagal memperbarui data karyawan: ' . $e->getMessage());
+        }
+    }
+
+    public function destroy($id)
+    {
+        try {
+            // Find the employee by ID
+            $karyawan = User::findOrFail($id);
+
+            // Delete the employee
+            $karyawan->delete();
+
+            return redirect()->route('karyawan.index')->with('success', 'Data karyawan berhasil dihapus.');
+        } catch (\Exception $e) {
+            return redirect()->route('karyawan.index')->with('error', 'Gagal menghapus data karyawan: ' . $e->getMessage());
         }
     }
 }

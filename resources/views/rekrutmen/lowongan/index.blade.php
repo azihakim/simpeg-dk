@@ -16,11 +16,6 @@
 			<div class="alert alert-danger" id="error-alert">
 				{{ session('error') }}
 			</div>
-			<script>
-				setTimeout(function() {
-					document.getElementById('error-alert').style.display = 'none';
-				}, 3000);
-			</script>
 		@endif
 		<div class="card">
 			<div class="card-header">
@@ -42,7 +37,7 @@
 							<th style="width: 5px">#</th>
 							<th>Jabatan</th>
 							<th style="width: 20%">Status</th>
-							@if (Auth::user()->jabatan == 'Super Admin' || Auth::user()->jabatan == 'Admin' || Auth::user()->jabatan == 'Pelamar')
+							@if (in_array(Auth::user()->jabatan, ['Super Admin', 'Admin', 'Pelamar']))
 								<th style="width: 30%">Aksi</th>
 							@endif
 						</tr>
@@ -53,7 +48,7 @@
 								<td>{{ $loop->iteration }}</td>
 								<td>{{ $item->jabatan->nama_jabatan }}</td>
 								<td>{{ $item->status }}</td>
-								@if (Auth::user()->jabatan == 'Super Admin' || Auth::user()->jabatan == 'Admin' || Auth::user()->jabatan == 'Pelamar')
+								@if (in_array(Auth::user()->jabatan, ['Super Admin', 'Admin', 'Pelamar']))
 									<td>
 										@if (Auth::user()->jabatan == 'Super Admin' || Auth::user()->jabatan == 'Admin')
 											<a href="{{ route('lowongan.edit', $item->id) }}" class="btn btn-warning btn-block">Edit</a>

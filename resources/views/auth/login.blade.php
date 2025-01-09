@@ -63,7 +63,7 @@
 						</div>
 					</div>
 					<p class="mt-1">
-						<a href="{{ route('registrasi.form') }}">Klik untuk kirim lamaran</a>
+						<a href="{{ route('registrasi.form') }}">Daftar</a>
 					</p>
 				</form>
 			</div>
