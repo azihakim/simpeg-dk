@@ -37,242 +37,147 @@
 	@yield('style')
 </head>
 
-<body class="hold-transition sidebar-mini layout-fixed">
+<body class="hold-transition layout-top-nav">
 	<div class="wrapper">
 
-		<!-- Preloader -->
-		{{-- <div class="preloader flex-column justify-content-center align-items-center">
-    <h1>SIMPEG</h1>
-    <img src="{{ asset('vendors/dist/img/AdminLTELogo.png') }}" alt="AdminLTELogo" height="60" width="60">
-  </div> --}}
-
 		<!-- Navbar -->
-		<nav class="main-header navbar navbar-expand navbar-white navbar-light">
+		<nav class="main-header navbar navbar-expand navbar-dark navbar-primary mb-3">
 			<!-- Left navbar links -->
 			<ul class="navbar-nav">
 				<li class="nav-item">
-					<a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+					<a href="index3.html" class="nav-link">
+						<img src="{{ asset('vendors/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo"
+							class="brand-image img-circle elevation-3" style="opacity: .8"> SIMPEG
+					</a>
+				</li>
+
+				<!-- REKRUTMEN dropdown -->
+				@if (Auth::user()->jabatan == 'Super Admin' ||
+						Auth::user()->jabatan == 'Pimpinan' ||
+						Auth::user()->jabatan == 'Admin' ||
+						Auth::user()->jabatan != 'Karyawan')
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+							aria-expanded="false">
+							<i class="fas fa-newspaper"></i> Rekrutmen
+						</a>
+						<div class="dropdown-menu">
+							<a href="{{ route('lowongan.index') }}" class="dropdown-item @yield('act-lowongan')">
+								<i class="fas fa-file-alt"></i> Lowongan
+							</a>
+							<a href="{{ route('lamaran.index') }}" class="dropdown-item @yield('act-lamaran')">
+								<i class="fas fa-briefcase"></i> Pelamar
+							</a>
+						</div>
+					</li>
+				@endif
+
+				<!-- Karyawan dropdown -->
+				<li class="nav-item dropdown">
+					@if (Auth::user()->jabatan == 'Super Admin' || Auth::user()->jabatan == 'Pimpinan' || Auth::user()->jabatan != 'Pelamar')
+						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+							aria-expanded="false">
+							<i class="fas fa-users"></i> Karyawan
+						</a>
+						<div class="dropdown-menu">
+							@if (Auth::user()->jabatan == 'Super Admin' ||
+									Auth::user()->jabatan == 'Pimpinan' ||
+									Auth::user()->jabatan != 'Karyawan')
+								<a href="{{ route('karyawan.index') }}" class="dropdown-item @yield('act-karyawan')">
+									<i class="fas fa-database"></i> Data Karyawan
+								</a>
+							@endif
+							@if (Auth::user()->jabatan == 'Super Admin' ||
+									Auth::user()->jabatan == 'Pimpinan' ||
+									Auth::user()->jabatan == 'Karyawan')
+								<a href="{{ route('jabatan.index') }}" class="dropdown-item @yield('act-jabatan')">
+									<i class="fas fa-briefcase"></i> Jabatan
+								</a>
+							@endif
+							@if (Auth::user()->jabatan == 'Super Admin' ||
+									Auth::user()->jabatan == 'Pimpinan' ||
+									Auth::user()->jabatan == 'Karyawan' ||
+									Auth::user()->jabatan == 'Admin')
+								<a href="{{ route('absensi.index') }}" class="dropdown-item @yield('act-absensi')">
+									<i class="fas fa-calendar"></i> Absensi
+								</a>
+							@endif
+							@if (Auth::user()->jabatan == 'Super Admin')
+								<a href="{{ route('location.index') }}" class="dropdown-item @yield('act-lokasi')">
+									<i class="fas fa-building"></i> Lokasi
+								</a>
+							@endif
+							@if (Auth::user()->jabatan == 'Super Admin' ||
+									Auth::user()->jabatan == 'Pimpinan' ||
+									Auth::user()->jabatan == 'Karyawan')
+								<a href="{{ route('cutiizin.index') }}" class="dropdown-item @yield('act-cutiizin')">
+									<i class="fas fa-calendar-times"></i> Cuti/Izin
+								</a>
+							@endif
+							@if (Auth::user()->jabatan == 'Super Admin' ||
+									Auth::user()->jabatan == 'Pimpinan' ||
+									Auth::user()->jabatan == 'Karyawan')
+								<a href="{{ route('promosidemosi.index') }}" class="dropdown-item @yield('act-promosidemosi')">
+									<i class="fas fa-bullhorn"></i> Promosi/Demosi
+								</a>
+							@endif
+							@if (Auth::user()->jabatan == 'Super Admin' ||
+									Auth::user()->jabatan == 'Pimpinan' ||
+									Auth::user()->jabatan == 'Karyawan')
+								<a href="{{ route('resign.index') }}" class="dropdown-item @yield('act-resign')">
+									<i class="fas fa-user-times"></i> Pengunduran Diri
+								</a>
+							@endif
+							@if (Auth::user()->jabatan == 'Super Admin' ||
+									Auth::user()->jabatan == 'Pimpinan' ||
+									Auth::user()->jabatan == 'Karyawan')
+								<a href="{{ route('rewardpunishment.index') }}" class="dropdown-item @yield('act-rewardpunishment')">
+									<i class="fas fa-gavel"></i> Reward/Punishment
+								</a>
+							@endif
+							@if (Auth::user()->jabatan == 'Super Admin' ||
+									Auth::user()->jabatan == 'Pimpinan' ||
+									Auth::user()->jabatan == 'Karyawan' ||
+									Auth::user()->jabatan == 'Admin')
+								<a href="{{ route('phk.index') }}" class="dropdown-item @yield('act-phk')">
+									<i class="fas fa-users-slash"></i> PHK
+								</a>
+							@endif
+							@if (Auth::user()->jabatan == 'Super Admin' ||
+									Auth::user()->jabatan == 'Pimpinan' ||
+									Auth::user()->jabatan == 'Karyawan' ||
+									Auth::user()->jabatan == 'Admin')
+								<a href="{{ route('user.index') }}" class="dropdown-item @yield('act-user')">
+									<i class="fas fa-laptop"></i> Data Pengguna
+								</a>
+							@endif
+						</div>
+					@endif
 				</li>
 			</ul>
 
-			<!-- Right navbar links -->
+			<!-- Right navbar links (optional) -->
 			<ul class="navbar-nav ml-auto">
+				<!-- Profile dropdown -->
 				<li class="nav-item dropdown">
-					<a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
-						{{ Auth::user()->nama ?? (Auth::user()->username ?? 'none') }} - {{ Auth::user()->jabatan ?? 'none' }}
-						&nbsp;&nbsp;<i class="far fa-user"></i>
+					<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+						aria-expanded="false">
+						<i class="fas fa-user-circle"></i> Profile
 					</a>
-					<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;">
-						<a class="dropdown-item" href="{{ route('logout') }}"
-							onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-							{{ __('Log Out') }}
+					<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+
+						<a href="{{ route('logout') }}" class="dropdown-item">
+							<i class="fas fa-sign-out-alt"></i> Logout
 						</a>
-						<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-							@csrf
-						</form>
 					</div>
 				</li>
 			</ul>
 		</nav>
+
 		<!-- /.navbar -->
-
-		<!-- Main Sidebar Container -->
-		<aside class="main-sidebar sidebar-dark-primary elevation-4">
-			<!-- Brand Logo -->
-			<a href="index3.html" class="brand-link">
-				<img src="{{ asset('vendors/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo"
-					class="brand-image img-circle elevation-3" style="opacity: .8">
-				<span class="brand-text font-weight-light">SIMPEG</span>
-			</a>
-
-			<!-- Sidebar -->
-			<div class="sidebar">
-
-				<!-- Sidebar Menu -->
-				<nav class="mt-2">
-					<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-						{{-- <li class="nav-item">
-							<a href="" class="nav-link">
-								<i class="nav-icon fas fa-tachometer-alt"></i>
-								<p>
-									Dashboard
-								</p>
-							</a>
-						</li> --}}
-						@if (Auth::user()->jabatan == 'Super Admin' ||
-								Auth::user()->jabatan == 'Pimpinan' ||
-								Auth::user()->jabatan == 'Admin' ||
-								Auth::user()->jabatan != 'Karyawan')
-							<li class="nav-header">REKRUTMEN</li>
-							<li class="nav-item">
-								<a href="{{ route('lowongan.index') }}" class="@yield('act-lowongan') nav-link">
-									<i class="nav-icon fas fa-newspaper"></i>
-									<p>Lowongan</p>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a href="{{ route('lamaran.index') }}" class="@yield('act-lamaran') nav-link">
-									<i class="nav-icon fas fa-briefcase"></i>
-									<p>Pelamar</p>
-								</a>
-							</li>
-						@endif
-						<li class="nav-item">
-							@if (Auth::user()->jabatan == 'Super Admin' || Auth::user()->jabatan == 'Pimpinan' || Auth::user()->jabatan != 'Pelamar')
-								<a href="#" class="nav-link">
-									<i class="nav-icon fas fa-users"></i>
-									<p>
-										Karyawan
-										<i class="right fas fa-angle-left"></i>
-									</p>
-								</a>
-							@endif
-							<ul class="nav nav-treeview">
-								@if (Auth::user()->jabatan == 'Super Admin' ||
-										Auth::user()->jabatan == 'Pimpinan' ||
-										Auth::user()->jabatan != 'Karyawan')
-									<li class="nav-item">
-										<a href="{{ route('karyawan.index') }}" class="@yield('act-karyawan') nav-link">
-											<i class="fas fa-database nav-icon"></i>
-											<p>Data Karyawan</p>
-										</a>
-									</li>
-								@endif
-								@if (Auth::user()->jabatan == 'Super Admin' ||
-										Auth::user()->jabatan == 'Pimpinan' ||
-										Auth::user()->jabatan == 'Karyawan')
-									<li class="nav-item">
-										<a href="{{ route('jabatan.index') }}" class="@yield('act-jabatan') nav-link">
-											<i class="fas fa-users nav-icon"></i>
-											<p>Jabatan</p>
-										</a>
-									</li>
-								@endif
-								@if (Auth::user()->jabatan == 'Super Admin' ||
-										Auth::user()->jabatan == 'Pimpinan' ||
-										Auth::user()->jabatan == 'Karyawan' ||
-										Auth::user()->jabatan == 'Admin')
-									<li class="nav-item">
-										<a href="{{ route('absensi.index') }}" class="nav-link @yield('act-absensi')">
-											<i class="nav-icon fas fa-calendar"></i>
-											<p>
-												Absensi
-											</p>
-										</a>
-									</li>
-								@endif
-								@if (Auth::user()->jabatan == 'Super Admin')
-									<li class="nav-item">
-										<a href="{{ route('location.index') }}" class="nav-link @yield('act-lokasi')">
-											<i class="nav-icon fas fa-building"></i>
-											<p>
-												Lokasi
-											</p>
-										</a>
-									</li>
-								@endif
-								@if (Auth::user()->jabatan == 'Super Admin' ||
-										Auth::user()->jabatan == 'Pimpinan' ||
-										Auth::user()->jabatan == 'Karyawan')
-									<li class="nav-item">
-										<a href="{{ route('cutiizin.index') }}" class="nav-link @yield('act-cutiizin')">
-											<i class="nav-icon fas fa-calendar-times"></i>
-											<p>
-												Cuti/Izin
-											</p>
-										</a>
-									</li>
-								@endif
-								@if (Auth::user()->jabatan == 'Super Admin' ||
-										Auth::user()->jabatan == 'Pimpinan' ||
-										Auth::user()->jabatan == 'Karyawan')
-									<li class="nav-item">
-										<a href="{{ route('promosidemosi.index') }}" class="nav-link @yield('act-promosidemosi')">
-											<i class="nav-icon fas fa-bullhorn"></i>
-											<p>
-												Promosi/Demosi
-											</p>
-										</a>
-									</li>
-								@endif
-								@if (Auth::user()->jabatan == 'Super Admin' ||
-										Auth::user()->jabatan == 'Pimpinan' ||
-										Auth::user()->jabatan == 'Karyawan')
-									<li class="nav-item">
-										<a href="{{ route('resign.index') }}" class="nav-link @yield('act-resign')">
-											<i class="nav-icon fas fa-user-times"></i>
-											<p>
-												Pengunduran Diri
-											</p>
-										</a>
-									</li>
-								@endif
-								@if (Auth::user()->jabatan == 'Super Admin' ||
-										Auth::user()->jabatan == 'Pimpinan' ||
-										Auth::user()->jabatan == 'Karyawan')
-									<li class="nav-item">
-										<a href="{{ route('rewardpunishment.index') }}" class="nav-link @yield('act-rewardpunishment')">
-											<i class="nav-icon fas fa-gavel"></i>
-											<p>
-												Reward/Punishment
-											</p>
-										</a>
-									</li>
-								@endif
-								@if (Auth::user()->jabatan == 'Super Admin' ||
-										Auth::user()->jabatan == 'Pimpinan' ||
-										Auth::user()->jabatan == 'Karyawan' ||
-										Auth::user()->jabatan == 'Admin')
-									<li class="nav-item">
-										<a href="{{ route('phk.index') }}" class="nav-link @yield('act-phk')">
-											<i class="nav-icon fas fa-users-slash"></i>
-											<p>
-												PHK
-											</p>
-										</a>
-									</li>
-								@endif
-								@if (Auth::user()->jabatan == 'Super Admin' ||
-										Auth::user()->jabatan == 'Pimpinan' ||
-										Auth::user()->jabatan == 'Karyawan' ||
-										Auth::user()->jabatan == 'Admin')
-									<li class="nav-item">
-										<a href="{{ route('user.index') }}" class="nav-link @yield('act-user')">
-											<i class="nav-icon fa fa-laptop"></i>
-											<p>Data Pengguna</p>
-										</a>
-									</li>
-								@endif
-							</ul>
-						</li>
-
-					</ul>
-				</nav>
-				<!-- /.sidebar-menu -->
-			</div>
-			<!-- /.sidebar -->
-		</aside>
 
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
-			<!-- Content Header (Page header) -->
-			<div class="content-header">
-				{{-- <div class="container-fluid">
-					<div class="row mb-2">
-						<div class="col-sm-6">
-							<h1 class="m-0">Dashboard</h1>
-						</div><!-- /.col -->
-						<div class="col-sm-6">
-							<ol class="breadcrumb float-sm-right">
-								<li class="breadcrumb-item"><a href="#">Home</a></li>
-								<li class="breadcrumb-item active">Dashboard v1</li>
-							</ol>
-						</div><!-- /.col -->
-					</div><!-- /.row -->
-				</div><!-- /.container-fluid --> --}}
-			</div>
-			<!-- /.content-header -->
-
 			<!-- Main content -->
 			<section class="content">
 				<div class="container-fluid">
@@ -284,15 +189,22 @@
 			<!-- /.content -->
 		</div>
 		<!-- /.content-wrapper -->
+
+		<!-- Control Sidebar -->
+		<aside class="control-sidebar control-sidebar-dark">
+			<!-- Control sidebar content goes here -->
+		</aside>
+		<!-- /.control-sidebar -->
+
+		<!-- Main Footer -->
 		<footer class="main-footer">
-			<strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
-			All rights reserved.
-			<div class="float-right d-none d-sm-inline-block">
-				<b>Version</b> 3.2.0
+			<!-- To the right -->
+			<div class="float-right d-none d-sm-inline">
+				Anything you want
 			</div>
+			<!-- Default to the left -->
+			<strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
 		</footer>
-
-
 	</div>
 
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
