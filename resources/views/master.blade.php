@@ -167,9 +167,13 @@
 					</a>
 					<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
 
-						<a href="{{ route('logout') }}" class="dropdown-item">
-							<i class="fas fa-sign-out-alt"></i> Logout
+						<a class="dropdown-item" href="{{ route('logout') }}"
+							onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+							{{ __('Log Out') }}
 						</a>
+						<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+							@csrf
+						</form>
 					</div>
 				</li>
 			</ul>
