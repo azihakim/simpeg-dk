@@ -26,6 +26,14 @@ class AbsensiController extends Controller
             ->orderBy('created_at')
             ->get();
 
+        if (auth()->user()->jabatan == 'Karyawan') {
+            $dataAbsen = Absensi::with('user')
+                ->where('id_karyawan', auth()->id())
+                ->orderBy('id_karyawan')
+                ->orderBy('created_at')
+                ->get();
+        }
+
         return view('absensi.index', compact('dataAbsen'));
     }
 
