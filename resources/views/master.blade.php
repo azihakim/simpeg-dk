@@ -162,7 +162,8 @@
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
 						aria-expanded="false">
-						<i class="fas fa-user-circle"></i> Profile
+						<i class="fas fa-user-circle"></i> {{ Auth::user()->nama ?? (Auth::user()->username ?? 'none') }} -
+						{{ Auth::user()->jabatan ?? 'none' }}
 					</a>
 					<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
 
@@ -198,12 +199,7 @@
 
 		<!-- Main Footer -->
 		<footer class="main-footer">
-			<!-- To the right -->
-			<div class="float-right d-none d-sm-inline">
-				Anything you want
-			</div>
-			<!-- Default to the left -->
-			<strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+
 		</footer>
 	</div>
 
