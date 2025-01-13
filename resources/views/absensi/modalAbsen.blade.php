@@ -18,7 +18,7 @@
 			<div class="modal-body">
 				<form action="{{ route('absensi.store') }}" method="POST" id="absensiForm" enctype="multipart/form-data">
 					@csrf
-					<div class="form-group" id="divKeterangan" style="display: block">
+					<div class="form-group" id="divKeterangan" style="display: none">
 						<label for="keteranganAbsen">Keterangan Absen</label>
 						<div class="row">
 							<div class="col-md-2">
@@ -194,22 +194,17 @@
 						officeLongitude);
 
 					// Cek apakah jarak lebih kecil dari 50 meter
-					// if (distance <= 1000000) {
-					// 	// Tampilkan peta
-					// 	modalDialog.classList.remove('modal-sm');
-					// 	modalDialog.classList.add('modal-xl');
-					// 	divLokasi.style.display = 'block';
-					// 	map(userLatitude, userLongitude);
-					// } else {
-					// 	alert('Lokasi Anda terlalu jauh dari kantor untuk melakukan absensi.');
-					// 	// Reset form atau batalkan pengiriman form
-					// 	return;
-					// }
-
-					modalDialog.classList.remove('modal-sm');
-					modalDialog.classList.add('modal-xl');
-					// divLokasi.style.display = 'block';
-					map(userLatitude, userLongitude);
+					if (distance <= 1000000) {
+						// Tampilkan peta
+						modalDialog.classList.remove('modal-sm');
+						modalDialog.classList.add('modal-xl');
+						divLokasi.style.display = 'block';
+						map(userLatitude, userLongitude);
+					} else {
+						alert('Lokasi Anda terlalu jauh dari kantor untuk melakukan absensi.');
+						// Reset form atau batalkan pengiriman form
+						return;
+					}
 					divKeterangan.style.display = 'block';
 				}, error => {
 					alert('Lokasi tidak dapat diakses. Periksa izin lokasi.');
