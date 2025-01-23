@@ -19,7 +19,30 @@ class CutiIzinController extends Controller
         } else {
             $data = CutiIzin::all();
         }
+
         return view('cutiizin.index', compact('data'));
+    }
+
+    public function checkQuota($id_karyawan)
+    {
+        $kuota = 14;
+        $tahun = date('Y');
+        $totalRecently = CutiIzin::where('id_karyawan', $id_karyawan)
+            ->whereYear('tanggal_mulai', $tahun)
+            ->where('status', 'Diterima')
+            ->get()
+            ->sum(function ($cuti) {
+                $start = strtotime($cuti->tanggal_mulai);
+                $end = strtotime($cuti->tanggal_selesai);
+                return ($end - $start) / (60 * 60 * 24) + 1;
+            });
+
+        $remainingQuota = $kuota - $totalRecently;
+
+        return response()->json([
+            'totalRecently' => $totalRecently,
+            'remaining_quota' => $remainingQuota
+        ]);
     }
 
     /**
@@ -27,7 +50,8 @@ class CutiIzinController extends Controller
      */
     public function create()
     {
-        return view('cutiizin.create');
+        $kuota = $this->checkQuota(auth()->user()->id);
+        return view('cutiizin.create', compact('kuota'));
     }
 
     /**
@@ -35,6 +59,17 @@ class CutiIzinController extends Controller
      */
     public function store(Request $request)
     {
+        $kuotaResponse = $this->checkQuota(Auth::user()->id);
+        $kuota = $kuotaResponse->getData(true);
+
+        $start = strtotime($request->tanggal_mulai);
+        $end = strtotime($request->tanggal_selesai);
+        $daysRequested = ($end - $start) / (60 * 60 * 24) + 1;
+
+        if ($kuota['remaining_quota'] < $daysRequested) {
+            return redirect()->back()->with('error', 'Kuota tidak mencukupi. Sisa kuota: ' . $kuota['remaining_quota'] . ' hari');
+        }
+
         $data = new CutiIzin();
         $data->id_karyawan = Auth::user()->id;
         $data->jenis = $request->jenis;

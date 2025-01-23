@@ -2,6 +2,11 @@
 @section('act-jabatan', 'active')
 @section('content')
 	<div class="col-sm-7">
+		@if (session('error'))
+			<div class="alert alert-danger" id="error-alert">
+				{{ session('error') }}
+			</div>
+		@endif
 		<div class="card card-warning">
 			<div class="card-header">
 				<h3 class="card-title">Form Tambah Cuti/Izin</h3>
@@ -11,6 +16,13 @@
 			<form action="{{ route('cutiizin.store') }}" method="POST" class="form-horizontal">
 				@csrf
 				<div class="card-body">
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Sisa Kuota</label>
+						<div class="col-sm-10">
+							<input required disabled value="{{ json_decode($kuota->getContent(), true)['remaining_quota'] }}" type="text"
+								class="form-control">
+						</div>
+					</div>
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label">Nama</label>
 						<div class="col-sm-10">
