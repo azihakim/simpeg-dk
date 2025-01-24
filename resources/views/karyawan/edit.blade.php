@@ -56,7 +56,7 @@
 						<div class="col-sm-4">
 							<div class="form-group">
 								<label for="username">Username</label>
-								<input type="text" name="username" class="form-control" value="{{ $data->username }}">
+								<input type="text" name="username" class="form-control" value="{{ $data->user->username }}">
 							</div>
 						</div>
 						<div class="col-sm-4">

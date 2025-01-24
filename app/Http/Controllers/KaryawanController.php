@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pegawai;
 use App\Models\Rekrutmen;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -13,7 +14,10 @@ class KaryawanController extends Controller
      */
     public function index()
     {
-        $data = User::where('jabatan', 'Karyawan')->get();
+        $data = Pegawai::with('user')->get();
+        $data = $data->filter(function ($item) {
+            return $item->user->jabatan === 'Karyawan';
+        });
         return view('karyawan.index', compact('data'));
     }
 
@@ -67,7 +71,7 @@ class KaryawanController extends Controller
 
     public function edit($id)
     {
-        $data = User::find($id);
+        $data = Pegawai::with('user')->find($id);
         return view('karyawan.edit', compact('data'));
     }
 
@@ -76,13 +80,13 @@ class KaryawanController extends Controller
         try {
 
             // Find the employee by ID
-            $karyawan = User::findOrFail($id);
+            $karyawan = Pegawai::with('user')->find($id);
 
             // Update the employee data
             $karyawan->nama = $request->nama;
             $karyawan->umur = $request->umur;
             $karyawan->jenis_kelamin = $request->jenis_kelamin;
-            $karyawan->telepon = $request->telepon;
+            $karyawan->no_telp = $request->no_telp;
             $karyawan->nik = $request->nik;
 
             // Save the updated data
@@ -90,7 +94,7 @@ class KaryawanController extends Controller
 
             return redirect()->route('karyawan.index')->with('success', 'Data karyawan berhasil diperbarui.');
         } catch (\Exception $e) {
-            return redirect()->route('karyawan.index')->with('error', 'Gagal memperbarui data karyawan: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Gagal memperbarui data karyawan: ' . $e->getMessage());
         }
     }
 
