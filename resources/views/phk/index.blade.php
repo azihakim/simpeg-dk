@@ -50,12 +50,12 @@
 								<td>{{ $loop->iteration }}</td>
 								<td>{{ $item->nama ?? '' }}</td>
 								<td>
-									@if ($item->status == 'Menunggu')
-										<span class="badge badge-warning">{{ $item->status }}</span>
-									@elseif($item->status == 'Diterima')
-										<span class="badge badge-success">{{ $item->status }}</span>
+									@if ($item->phk_status == 'Menunggu')
+										<span class="badge badge-warning">{{ $item->phk_status }}</span>
+									@elseif($item->phk_status == 'Diterima')
+										<span class="badge badge-success">{{ $item->phk_status }}</span>
 									@else
-										<span class="badge badge-danger">{{ $item->status }}</span>
+										<span class="badge badge-danger">{{ $item->phk_status }}</span>
 									@endif
 								</td>
 								<td>
@@ -73,13 +73,13 @@
 											<div class="dropdown-menu">
 												@if (Auth()->user()->jabatan == 'Super Admin' || Auth()->user()->jabatan == 'Pimpinan')
 													<h6 class="dropdown-header">Ubah Status</h6>
-													<form action="{{ route('phk.status', $item->id) }}" method="POST" style="display:inline;">
+													<form action="{{ route('phk.status', $item->id_phk) }}" method="POST" style="display:inline;">
 														@csrf
 														@method('PUT')
 														<input type="hidden" name="status" value="Ditolak">
 														<button class="dropdown-item" type="submit">Tolak</button>
 													</form>
-													<form action="{{ route('phk.status', $item->id) }}" method="POST" style="display:inline;">
+													<form action="{{ route('phk.status', $item->id_phk) }}" method="POST" style="display:inline;">
 														@csrf
 														@method('PUT')
 														<input type="hidden" name="status" value="Diterima">
@@ -88,8 +88,8 @@
 												@endif
 												<div class="dropdown-divider"></div>
 												@if (Auth::user()->jabatan == 'Super Admin' || Auth::user()->jabatan == 'Pengadaan' || Auth::user()->jabatan == 'Admin')
-													<a href="{{ route('phk.edit', $item->id) }}" class="dropdown-item">Edit</a>
-													<form action="{{ route('phk.destroy', $item->id) }}" method="POST" class="d-inline">
+													<a href="{{ route('phk.edit', $item->id_phk) }}" class="dropdown-item">Edit</a>
+													<form action="{{ route('phk.destroy', $item->id_phk) }}" method="POST" class="d-inline">
 														@csrf
 														@method('delete')
 														<button class="dropdown-item" onclick="return confirm('Yakin Ingin Menghapus Data Ini?')">Hapus</button>
@@ -98,8 +98,8 @@
 											</div>
 										</div>
 										@if (Auth()->user()->jabatan == 'Super Admin' && Auth::user()->jabatan != 'Pimpinan')
-											<a href="{{ route('phk.edit', $item->id) }}" class="btn btn-outline-warning">Edit</a>
-											<form action="{{ route('phk.destroy', $item->id) }}" method="POST" class="d-inline">
+											<a href="{{ route('phk.edit', $item->id_phk) }}" class="btn btn-outline-warning">Edit</a>
+											<form action="{{ route('phk.destroy', $item->id_phk) }}" method="POST" class="d-inline">
 												@csrf
 												@method('delete')
 												<button class="btn btn-outline-danger"

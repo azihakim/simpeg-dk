@@ -13,12 +13,13 @@
 			</div>
 			<!-- /.card-header -->
 			<!-- form start -->
-			<form action="{{ route('phk.update', $data->id) }}" method="POST" enctype="multipart/form-data" style="padding: 10px">
+			<form action="{{ route('phk.update', $data->phk_id) }}" method="POST" enctype="multipart/form-data"
+				style="padding: 10px">
 				@csrf
 				@method('PUT')
 				<div class="form-group">
 					<label for="nama">Nama Karyawan</label>
-					<input type="text" class="form-control" id="nama" name="nama" value="{{ $data->user->nama }}" readonly>
+					<input type="text" class="form-control" id="nama" name="nama" value="{{ $data->nama }}" readonly>
 				</div>
 				<div class="form-group">
 					<label for="status">Status</label>

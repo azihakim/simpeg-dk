@@ -14,9 +14,11 @@ class PhkController extends Controller
     public function index()
     {
         if (auth()->user()->jabatan == 'Karyawan') {
-            $data = Phk::join('pegawais', 'phks.id_karyawan', '=', 'pegawais.user_id')->where('id_karyawan', auth()->user()->id)->get();
+            $data = Phk::join('pegawais', 'phks.id_karyawan', '=', 'pegawais.user_id')
+                ->select('phks.id as id_phk', 'phks.keterangan', 'phks.status as phk_status', 'pegawais.*')
+                ->where('id_karyawan', auth()->user()->id)->get();
         } else {
-            $data = Phk::join('pegawais', 'phks.id_karyawan', '=', 'pegawais.user_id')->get();
+            $data = Phk::join('pegawais', 'phks.id_karyawan', '=', 'pegawais.user_id')->select('phks.id as id_phk', 'phks.keterangan', 'phks.status as phk_status', 'pegawais.*')->get();
         }
         return view('phk.index', compact('data'));
     }
@@ -61,7 +63,10 @@ class PhkController extends Controller
 
     public function edit($id)
     {
-        $data = phk::find($id);
+        $data = Phk::join('pegawais', 'phks.id_karyawan', '=', 'pegawais.user_id')
+            ->select('phks.id as phk_id', 'pegawais.*', 'phks.surat', 'phks.keterangan', 'phks.status')
+            ->where('phks.id', $id)
+            ->first();
         return view('phk.edit', compact('data'));
     }
 

@@ -29,7 +29,7 @@
 							<option value="">Pilih Karyawan</option>
 							@foreach ($allKaryawan as $item)
 								<option value="{{ $item->id }}" data-divisi_lama="{{ $item->divisi ? $item->divisi->nama_jabatan : '-' }}"
-									{{ $item->id == $karyawan->id ? 'selected' : '' }}>
+									{{ $item->user_id == $data->id_karyawan ? 'selected' : '' }} data-divisi_lama_id="{{ $item->divisi->id }}">
 									{{ $item->nama }}
 								</option>
 							@endforeach
@@ -48,8 +48,7 @@
 					<div class="form-group col-md-6">
 						<label>Divisi Lama</label>
 						<input type="hidden" name="divisi_lama_id" value="{{ $data->divisi_lama_id }}">
-						<input type="text" class="form-control" name="divisi_lama_display" value="{{ $data->divisi_lama_display }}"
-							disabled>
+						<input type="text" class="form-control" name="divisi_lama_display" value="" disabled>
 					</div>
 					<div class="form-group col-md-6">
 						<label>Divisi Baru</label>
@@ -85,7 +84,10 @@
 				var divisiLamaId = selectedOption.data('divisi_lama_id');
 				$('input[name="divisi_lama_id"]').val(divisiLamaId);
 				$('input[name="divisi_lama_display"]').val(divisiLama);
+
 			});
+
+			$('#id_karyawan').trigger('change');
 		});
 	</script>
 	<script>

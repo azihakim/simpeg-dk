@@ -21,10 +21,15 @@ class PromosiDemosiController extends Controller
             $data = $data
                 ->join('pegawais', 'promosi_demosis.id_karyawan', '=', 'pegawais.user_id')
                 ->where('id_karyawan', auth()->id())
+                ->select('promosi_demosis.*', 'pegawais.nama as nama_karyawan')
                 ->get();
         } else {
-            $data = $data->join('pegawais', 'promosi_demosis.id_karyawan', '=', 'pegawais.user_id')->get();
+            $data = $data
+                ->join('pegawais', 'promosi_demosis.id_karyawan', '=', 'pegawais.user_id')
+                ->select('promosi_demosis.*', 'pegawais.nama as nama_karyawan')
+                ->get();
         }
+
         return view('promosidemosi.index', compact('data'));
     }
 
@@ -87,7 +92,8 @@ class PromosiDemosiController extends Controller
     {
         $data = PromosiDemosi::find($id);
         $karyawan = User::with('divisi')->where('jabatan', 'Karyawan')->first();
-        $allKaryawan = User::where('jabatan', 'Karyawan')->get();
+        $allKaryawan = User::join('pegawais', 'users.id', '=', 'pegawais.user_id')
+            ->where('jabatan', 'Karyawan')->get();
         $divisi = Jabatan::all();
         return view('promosidemosi.edit', compact('data', 'karyawan', 'allKaryawan', 'divisi'));
     }
