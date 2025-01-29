@@ -48,7 +48,7 @@
 						@foreach ($rewardPunishments as $item)
 							<tr>
 								<td>{{ $loop->iteration }}</td>
-								<td>{{ $item->karyawan->nama }}</td>
+								<td>{{ $item->nama }}</td>
 								<td>{{ $item->jenis }}</td>
 								<td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d/m/Y') }}</td>
 								<td>{{ $item->reward ? 'Rp' . number_format($item->reward, 0, ',', '.') : '-' }}</td>

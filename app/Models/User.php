@@ -10,6 +10,7 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
+
     public function absensi()
     {
         return $this->hasMany(Absensi::class, 'id_karyawan', 'id');
@@ -29,20 +30,9 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'nama',
         'jabatan',
-        'status',
-        'status_kerja',
-        'nik',
-        'umur',
-        'telepon',
-        'alamat',
         'username',
         'password',
-        'divisi',
     ];
 
     /**
@@ -64,8 +54,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    function pegawai()
+    public function pegawai()
     {
-        return $this->hasOne(Pegawai::class, 'id', 'user_id');
+        return $this->hasOne(Pegawai::class, 'user_id', 'id');
     }
 }

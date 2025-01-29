@@ -26,10 +26,11 @@
 						<select name="pelamar" class="form-control select2" id="pelamarSelect" style="width: 100%;">
 							<option value="">Pilih Calon Karyawan</option>
 							@foreach ($pelamar as $item)
-								<option value="{{ $item->user->id }}" data-nama="{{ $item->user->nama }}" data-umur="{{ $item->user->umur }}"
-									data-alamat="{{ $item->user->alamat }}" data-telepon="{{ $item->user->telepon }}"
-									data-jenis_kelamin="{{ $item->user->jenis_kelamin }}" data-pelamarId="{{ $item->id_pelamar }}">
-									{{ $item->user->nama }}
+								<option value="{{ $item->pegawai->id }}" data-nama="{{ $item->pegawai->nama }}"
+									data-umur="{{ $item->pegawai->umur }}" data-alamat="{{ $item->pegawai->alamat }}"
+									data-telepon="{{ $item->pegawai->no_telp }}" data-jenis_kelamin="{{ $item->pegawai->jenis_kelamin }}"
+									data-pelamarId="{{ $item->id_pelamar }}">
+									{{ $item->pegawai->nama }}
 								</option>
 							@endforeach
 						</select>
@@ -53,9 +54,9 @@
 					</div>
 				</div>
 				<div class="row mb-3">
-					<label for="telepon" class="col-sm-4 col-form-label">Telepon</label>
+					<label for="no_telp" class="col-sm-4 col-form-label">Telepon</label>
 					<div class="col-sm-8">
-						<input required type="text" class="form-control" name="telepon" id="telepon">
+						<input required type="text" class="form-control" name="no_telp" id="telepon">
 					</div>
 				</div>
 				<div class="row mb-3">

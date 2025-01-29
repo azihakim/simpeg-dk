@@ -22,7 +22,7 @@
 						<select required name="id_karyawan" class="form-control" id="id_karyawan" style="width:100%">
 							<option value="">Pilih Karyawan</option>
 							@foreach ($karyawan as $item)
-								<option value="{{ $item->id }}" data-divisi_lama="{{ $item->divisi }}">{{ $item->nama }} -
+								<option value="{{ $item->user_id }}" data-divisi_lama="{{ $item->divisi }}">{{ $item->nama }} -
 									{{ $item->divisi->nama_jabatan }}</option>
 							@endforeach
 						</select>

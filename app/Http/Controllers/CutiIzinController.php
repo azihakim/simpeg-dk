@@ -14,10 +14,15 @@ class CutiIzinController extends Controller
      */
     public function index()
     {
-        if (auth()->user()->jabatan == 'karyawan') {
-            $data = CutiIzin::where('id_karyawan', auth()->user()->id)->get();
+        if (auth()->user()->jabatan == 'Karyawan') {
+            $data = CutiIzin::join('pegawais', 'cuti_izins.id_karyawan', '=', 'pegawais.user_id')
+                ->where('user_id', auth()->id())
+                ->select('cuti_izins.*', 'pegawais.nama')
+                ->get();
         } else {
-            $data = CutiIzin::all();
+            $data = CutiIzin::join('pegawais', 'cuti_izins.id_karyawan', '=', 'pegawais.user_id')
+                ->select('cuti_izins.*', 'pegawais.nama')
+                ->get();
         }
 
         return view('cutiizin.index', compact('data'));

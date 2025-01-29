@@ -50,7 +50,7 @@
 					<tbody>
 						@foreach ($data as $item)
 							<tr>
-								<td>{{ $item->karyawan->nama }}</td>
+								<td>{{ $item->nama }}</td>
 								<td>{{ $item->jenis }}</td>
 								<td>{{ $item->divisiLama->nama_jabatan }}</td>
 								<td>{{ $item->divisiBaru->nama_jabatan }}</td>

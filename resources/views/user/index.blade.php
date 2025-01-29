@@ -47,7 +47,7 @@
 								@foreach ($data as $item)
 									<tr>
 										<td>{{ $loop->iteration }}</td>
-										<td>{{ $item->nama }}</td>
+										<td>{{ $item->pegawai ? $item->pegawai->nama : $item->username }}</td>
 										<td>{{ $item->jabatan }}</td>
 										@if (Auth::user()->jabatan == 'Super Admin' || Auth::user()->jabatan == 'Admin')
 											<td>

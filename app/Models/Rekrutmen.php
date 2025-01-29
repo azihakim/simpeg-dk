@@ -19,4 +19,9 @@ class Rekrutmen extends Model
     {
         return $this->belongsTo(Lowongan::class, 'id_lowongan');
     }
+
+    function pegawai()
+    {
+        return $this->hasOne(Pegawai::class, 'user_id', 'id_pelamar');
+    }
 }

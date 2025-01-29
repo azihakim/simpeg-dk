@@ -11,7 +11,7 @@ class RewardPunishmentController extends Controller
 {
     public function index()
     {
-        $rewardPunishments = RewardPunishment::with('karyawan')->get();
+        $rewardPunishments = RewardPunishment::join('pegawais', 'reward_punishments.id_karyawan', '=', 'pegawais.user_id')->get();
         if (auth()->user()->jabatan === 'Karyawan') {
             $rewardPunishments = $rewardPunishments->where('id_karyawan', auth()->id());
         }
@@ -25,6 +25,8 @@ class RewardPunishmentController extends Controller
     {
         $karyawan = User::with('punishments')
             ->where('jabatan', 'Karyawan')
+            ->join('pegawais', 'users.id', '=', 'pegawais.user_id')
+            ->select('users.*', 'pegawais.nama', 'pegawais.divisi_id')
             ->get()
             ->map(function ($user) {
                 $user->has_punishment = $user->punishments->isNotEmpty();

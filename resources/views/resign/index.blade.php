@@ -43,7 +43,7 @@
 						@foreach ($data as $item)
 							<tr>
 								<td>{{ $loop->iteration }}</td>
-								<td>{{ $item->user->nama }}</td>
+								<td>{{ $item->user->pegawai->nama }}</td>
 								<td>
 									@if ($item->status == 'Menunggu')
 										<span class="badge badge-warning">{{ $item->status }}</span>

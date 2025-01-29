@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pegawai;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class RegistrasiController extends Controller
@@ -18,16 +20,22 @@ class RegistrasiController extends Controller
             $request->validate([
                 'username' => 'unique:users,username',
             ]);
-            $data = new User();
-            $data->nama = $request->nama;
-            $data->telepon = $request->telepon;
-            $data->umur = $request->umur;
-            $data->alamat = $request->alamat;
-            $data->jenis_kelamin = $request->jenis_kelamin;
-            $data->jabatan = "Pelamar";
-            $data->username = $request->username;
-            $data->password = bcrypt($request->password);
-            $data->save();
+            DB::beginTransaction();
+            $user = new User();
+            $user->username = $request->username;
+            $user->jabatan = "Pelamar";
+            $user->password = bcrypt($request->password);
+            $user->save();
+
+            $karyawan = new Pegawai();
+            $karyawan->nama = $request->nama;
+            $karyawan->no_telp = $request->no_telp;
+            $karyawan->umur = $request->umur;
+            $karyawan->alamat = $request->alamat;
+            $karyawan->jenis_kelamin = $request->jenis_kelamin;
+            $karyawan->user_id = $user->id;
+            $karyawan->save();
+            DB::commit();
             return redirect()->route('login')->with('success', 'Registrasi berhasil');
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());

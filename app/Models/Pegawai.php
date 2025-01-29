@@ -14,7 +14,7 @@ class Pegawai extends Model
         'status',
         'status_kerja',
         'nik',
-        'telepon',
+        'no_telp',
         'alamat',
         'umur',
         'jenis_kelamin'
@@ -27,6 +27,6 @@ class Pegawai extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }

@@ -6,6 +6,7 @@ use App\Models\Pegawai;
 use App\Models\Rekrutmen;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class KaryawanController extends Controller
 {
@@ -26,7 +27,7 @@ class KaryawanController extends Controller
      */
     public function create()
     {
-        $pelamar = Rekrutmen::where('status', 'Diterima')->with('user')->get();
+        $pelamar = Rekrutmen::where('status', 'Diterima')->get();
         return view('karyawan.create', compact('pelamar'));
     }
 
@@ -37,10 +38,11 @@ class KaryawanController extends Controller
     {
         try {
             $request->validate([
-                'nik' => 'unique:users,nik',
+                'nik' => 'unique:pegawais,nik',
             ]);
+            DB::beginTransaction();
             // Find the user by pelamar ID
-            $karyawan = User::find($request->pelamar);
+            $karyawan = Pegawai::find($request->pelamar);
             $id_pelamar = (int) $request->id_pelamar;
             $pelamar = Rekrutmen::where('id_pelamar', $id_pelamar)->first();
             if (!$karyawan) {
@@ -50,19 +52,22 @@ class KaryawanController extends Controller
             // Assign the request data to the user
             $karyawan->umur = $request->umur;
             $karyawan->jenis_kelamin = $request->jenis_kelamin;
-            $karyawan->telepon = $request->telepon;
+            $karyawan->no_telp = $request->no_telp;
             $karyawan->divisi_id = $pelamar->lowongan->id;
             $karyawan->status = 'Aktif';
             $karyawan->nik = $request->nik;
-            $karyawan->jabatan = 'Karyawan';
-            // dd($karyawan);
+
+            $user = User::find($karyawan->user_id);
+            $user->jabatan = 'Karyawan';
+            $user->save();
+
             // Save the changes
             $karyawan->save();
 
 
             $pelamar->delete();
 
-
+            DB::commit();
             return redirect()->back()->with('success', 'Data karyawan berhasil ditambahkan.');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal menambahkan data karyawan: ' . $e->getMessage());
@@ -102,8 +107,11 @@ class KaryawanController extends Controller
     {
         try {
             // Find the employee by ID
-            $karyawan = User::findOrFail($id);
+            $user = User::findOrFail($id);
+            $karyawan = Pegawai::where('user_id', $id)->first();
 
+            // Delete the user
+            $user->delete();
             // Delete the employee
             $karyawan->delete();
 

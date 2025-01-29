@@ -162,7 +162,7 @@
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
 						aria-expanded="false">
-						<i class="fas fa-user-circle"></i> {{ Auth::user()->nama ?? (Auth::user()->username ?? 'none') }} -
+						<i class="fas fa-user-circle"></i> {{ Auth::user()->pegawai->nama ?? (Auth::user()->username ?? 'none') }} -
 						{{ Auth::user()->jabatan ?? 'none' }}
 					</a>
 					<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">

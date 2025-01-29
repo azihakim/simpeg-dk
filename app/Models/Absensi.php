@@ -21,4 +21,9 @@ class Absensi extends Model
     {
         return $this->belongsTo(User::class, 'id_karyawan', 'id');
     }
+
+    public function pegawai()
+    {
+        return $this->belongsTo(Pegawai::class, 'id_karyawan', 'id');
+    }
 }

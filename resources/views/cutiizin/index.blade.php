@@ -52,7 +52,7 @@
 					<tbody>
 						@foreach ($data as $item)
 							<tr>
-								<td>{{ $item->user->nama }}</td>
+								<td>{{ $item->nama }}</td>
 								<td>{{ $item->user->jabatan }}</td>
 								{{-- <td>{{ $item->status }}</td> --}}
 								<td>

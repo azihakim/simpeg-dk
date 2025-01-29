@@ -80,7 +80,7 @@
 								<td>{{ $loop->iteration }}</td>
 								<td>
 									{{-- Menampilkan nama karyawan yang ada --}}
-									{{ $masuk->user->nama ?? ($pulang->user->nama ?? ($cuti->user->nama ?? ($izin->user->nama ?? '-'))) }}
+									{{ $masuk->nama ?? ($pulang->nama ?? ($cuti->nama ?? ($izin->nama ?? '-'))) }}
 								</td>
 								<td>
 									{{-- Menampilkan tanggal --}}

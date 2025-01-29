@@ -21,16 +21,12 @@ class AbsensiController extends Controller
 
     function index()
     {
-        $dataAbsen = Absensi::with('user') // Pastikan relasi ke User didefinisikan
-            ->orderBy('id_karyawan')
-            ->orderBy('created_at')
+        $dataAbsen = Absensi::join('pegawais', 'absensi.id_karyawan', '=', 'pegawais.user_id')
             ->get();
 
         if (auth()->user()->jabatan == 'Karyawan') {
-            $dataAbsen = Absensi::with('user')
-                ->where('id_karyawan', auth()->id())
-                ->orderBy('id_karyawan')
-                ->orderBy('created_at')
+            $dataAbsen = Absensi::join('pegawais', 'absensi.id_karyawan', '=', 'pegawais.user_id')
+                ->where('user_id', auth()->id())
                 ->get();
         }
 

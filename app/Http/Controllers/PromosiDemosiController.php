@@ -16,9 +16,14 @@ class PromosiDemosiController extends Controller
      */
     public function index()
     {
-        $data = PromosiDemosi::all();
+        $data = PromosiDemosi::query();
         if (auth()->user()->jabatan === 'Karyawan') {
-            $data = $data->where('id_karyawan', auth()->id());
+            $data = $data
+                ->join('pegawais', 'promosi_demosis.id_karyawan', '=', 'pegawais.user_id')
+                ->where('id_karyawan', auth()->id())
+                ->get();
+        } else {
+            $data = $data->join('pegawais', 'promosi_demosis.id_karyawan', '=', 'pegawais.user_id')->get();
         }
         return view('promosidemosi.index', compact('data'));
     }

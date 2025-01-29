@@ -27,9 +27,10 @@
 						<select name="id_karyawan" class="form-control select2" id="id_karyawan" style="width: 100%;">
 							<option value="">Pilih Karyawan</option>
 							@foreach ($karyawan as $item)
-								<option value="{{ $item->id }}" data-divisi_lama="{{ $item->divisi ? $item->divisi->nama_jabatan : '-' }}"
-									data-divisi_lama_id="{{ $item->divisi_id }}">
-									{{ $item->nama }}
+								<option value="{{ $item->id }}"
+									data-divisi_lama="{{ $item->pegawai->divisi ? $item->pegawai->divisi->nama_jabatan : '-' }}"
+									data-divisi_lama_id="{{ $item->pegawai->divisi_id }}">
+									{{ $item->pegawai->nama }}
 								</option>
 							@endforeach
 						</select>

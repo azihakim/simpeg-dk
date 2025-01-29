@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pegawai;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -9,7 +10,7 @@ class UserController extends Controller
 {
     function index()
     {
-        $data = User::all();
+        $data = User::with('pegawai.divisi')->get();
         return view('user.index', compact('data'));
     }
 
@@ -29,11 +30,16 @@ class UserController extends Controller
 
         try {
             $user = new User();
-            $user->nama = $request->nama;
             $user->username = $request->username;
             $user->jabatan = $request->jabatan;
             $user->password = bcrypt($request->password);
             $user->save();
+
+            $pegawai = new Pegawai();
+            $pegawai->nama = $request->nama;
+            $pegawai->user_id = $user->id;
+            $pegawai->save();
+
 
             return redirect()->route('user.index')->with('success', 'User created successfully.');
         } catch (\Exception $e) {
@@ -51,13 +57,17 @@ class UserController extends Controller
     {
         try {
             $user = User::find($id);
-            $user->nama = $request->nama;
             $user->username = $request->username;
             $user->jabatan = $request->jabatan;
             if ($request->filled('password')) {
                 $user->password = bcrypt($request->password);
             }
             $user->save();
+
+            if ($user->pegawai) {
+                $user->pegawai->nama = $request->nama;
+                $user->pegawai->save();
+            }
 
             return redirect()->route('user.index')->with('success', 'User updated successfully.');
         } catch (\Exception $e) {

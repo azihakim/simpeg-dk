@@ -29,7 +29,7 @@
 							<div class="row">
 								<div class="form-group col-md-12">
 									<label>Nama</label>
-									<input type="text" name="nama" class="form-control" placeholder="Nama" value="{{ $data->nama }}">
+									<input type="text" name="nama" class="form-control" placeholder="Nama" value="{{ $data->pegawai->nama }}">
 								</div>
 							</div>
 							<div class="row">

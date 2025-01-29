@@ -14,7 +14,7 @@
 				<div class="row">
 					<div class="form-group col-md-12">
 						<label>Karyawan</label>
-						<input type="text" value="{{ auth()->user()->nama }}" class="form-control" disabled>
+						<input type="text" value="{{ auth()->user()->pegawai->nama }}" class="form-control" disabled>
 						<input type="hidden" value="{{ auth()->user()->id }}" class="form-control" name="id_karyawan">
 					</div>
 				</div>
