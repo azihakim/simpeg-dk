@@ -21,15 +21,17 @@ class AbsensiController extends Controller
 
     function index()
     {
-        $dataAbsen = Absensi::join('pegawais', 'absensi.id_karyawan', '=', 'pegawais.id')
+        $dataAbsen = Absensi::join('pegawais', 'absensi.id_karyawan', '=', 'pegawais.user_id')
             ->select('absensi.*', 'pegawais.nama', 'absensi.created_at')
             ->get();
+
         if (auth()->user()->jabatan == 'Karyawan') {
-            $dataAbsen = Absensi::join('pegawais', 'absensi.id_karyawan', '=', 'pegawais.id')
-                ->where('user_id', auth()->id())
+            $dataAbsen = Absensi::join('pegawais', 'absensi.id_karyawan', '=', 'pegawais.user_id')
+                ->where('id_karyawan', auth()->id())
                 ->select('absensi.*', 'pegawais.nama', 'absensi.created_at')
                 ->get();
         }
+
         return view('absensi.index', compact('dataAbsen'));
     }
 
