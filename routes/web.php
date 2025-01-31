@@ -126,4 +126,5 @@ Route::middleware('auth')->group(function () {
 });
 Route::get('/registrasi', [RegistrasiController::class, 'create'])->name('registrasi.form');
 Route::post('/registrasi', [RegistrasiController::class, 'store'])->name('registrasi.store');
+Route::get('/check-attendance', [AbsensiController::class, 'checkAttendance']);
 require __DIR__ . '/auth.php';
